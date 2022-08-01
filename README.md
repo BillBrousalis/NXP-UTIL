@@ -1,5 +1,9 @@
 # NXP CUP Utils
 
+# Debugging the NXP Cup Car
+
+![](assets/the_trifecta.png)
+
 ## Raspberry-PI NXP CUP Util
 
 Basic `uart` communication system (microe boar -> raspberry pi) / `bluetooth` communication system (raspberry pi -> laptop).
