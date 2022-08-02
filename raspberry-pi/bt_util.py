@@ -6,7 +6,8 @@ class PiBT():
     self.connected = False
     self.targetname = "BILL-LAPTOP"
     self.target = None
-    self.port = 1
+    self.port = 3
+    self.sock = None
     self._setup()
 
   def __str__(self):
@@ -23,9 +24,12 @@ class PiBT():
   def connect(self, target=None, port=None):
     if target is None: target = self.target
     if port is None: port = self.port
+    print(1)
     if self.connected: raise Exception("Already connected to a device")
     sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+    print(2)
     sock.connect((target, port))
+    print(3)
     self.connected = True
 
   def get_available_devices(self):
@@ -42,4 +46,5 @@ class PiBT():
 if __name__ == '__main__':
   #-- testing
   bt = PiBT()
+  #print(bt)
   bt.test()
