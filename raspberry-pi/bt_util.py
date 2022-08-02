@@ -6,7 +6,7 @@ class PiBT():
     self.connected = False
     self.targetname = "BILL-LAPTOP"
     self.target = None
-    self.port = 3
+    self.port = 9001
     self.sock = None
     self._setup()
 
@@ -24,7 +24,6 @@ class PiBT():
   def connect(self, target=None, port=None):
     if target is None: target = self.target
     if port is None: port = self.port
-    print(1)
     if self.connected: raise Exception("Already connected to a device")
     sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
     print(2)
