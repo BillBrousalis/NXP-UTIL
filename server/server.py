@@ -8,15 +8,17 @@ class Server():
     self.test() 
 
   def test(self):
-    try:
-      with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.bind((self.host, self.port))
-        s.listen(1)
-        conn, addr = s.accept()
-        with conn:
-          print(f"Connected by {addr}")
-    except Exception:
-        pass
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+      s.bind((self.host, self.port))
+      s.listen(1)
+      conn, addr = s.accept()
+      with conn:
+        print(f"Connected by {addr}")
+        while 1:
+          dat = conn.recv(1024)
+          if not dat:
+            break
+          print(dat)
 
 if __name__ == "__main__":
   #--testing
