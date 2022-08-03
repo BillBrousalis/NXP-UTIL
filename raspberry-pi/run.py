@@ -1,14 +1,25 @@
 #!/usr/bin/env python3
-import comms
+import uart
+import server
 
-def setup():
-  pass
+def main():
 
-def loop():
-  pass
+  n = 128
+  buf = None
+  try:
+    loop() 
+  except KeyboardInterrupt:
+    print("\n[-] Closing server & exiting...")
+    s.close()
+    exit()
+  except Exception as e:
+    print(f"[-] Error: {e}")
 
+  def loop:
+    u = Uart()
+    s = Server()
+    while 1:
+      buf = u.readbytes(n)
 
-if __name__ == '__main__':
-  setup()
-  while 1:
-    loop()
+if __name__ == "__main__":
+  main()

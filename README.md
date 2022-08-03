@@ -9,7 +9,7 @@ The Trifecta:
 ## Raspberry-PI NXP Util
 
 * Basic `uart` communication system (micro-e board -> raspberry-pi)
-* `bluetooth` communication system (raspberry-pi -> laptop)
+* `wifi` communication system (raspberry-pi -> laptop(s))
 
 ## Python3 GUI Util for Line Scanning Visualization
 
