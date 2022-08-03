@@ -13,5 +13,5 @@ The Trifecta:
 
 ## Python3 GUI Util for Line Scanning Visualization
 
-* Receive data trasmitted over bluetooth connection for logging
+* Receive data trasmitted over wifi connection for logging
 * Visualize data captured by the car's `LineScan` camera.
