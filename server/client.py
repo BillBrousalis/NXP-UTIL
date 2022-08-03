@@ -3,7 +3,7 @@ import socket
 
 class Client():
   def __init__(self):
-    self.host, self.port = 'fe80::106f:c39e:a20e:5e8c%4', 9001
+    self.host, self.port = 'bill-laptop', 9001
     self.test()
 
   def test(self):

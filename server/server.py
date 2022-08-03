@@ -3,7 +3,7 @@ import socket
 
 class Server():
   def __init__(self):
-    self.host, self.port = 'fe80::106f:c39e:a20e:5e8c%4', 9001
+    self.host, self.port = '', 9001
     print(self.host, self.port)
     self.test() 
 
