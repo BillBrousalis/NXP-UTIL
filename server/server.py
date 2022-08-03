@@ -3,9 +3,9 @@ import socket
 
 class Server():
   def __init__(self):
-    self.host, self.port = socket.gethostname(), 9001
+    self.host, self.port = '', 9001 #socket.gethostname(), 9001
     print(self.host, self.port)
-    #self.test() 
+    self.test() 
 
   def test(self):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
