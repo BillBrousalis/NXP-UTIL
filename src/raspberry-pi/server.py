@@ -12,11 +12,11 @@ class Server():
 
   def __str__(self):
     return ( "[DEBUG]\n"
-            f"HOST: {self.HOST:>10}\n"
-            f"PORT: {self.PORT:>10}\n"
-            f"MAX DEV: {self.MAX_DEV:>10}\n"
-            f"SOCK: {self.sock:>10}\n"
-            f"CLIENTS: {self.clients:>10}\n")
+            f"{'HOST':>15}: {self.HOST}\n"
+            f"{'PORT':>15}: {self.PORT}\n"
+            f"{'MAX DEV':>15}: {self.MAX_DEV}\n"
+            f"{'SOCK':>15}: {str(self.sock)}\n"
+            f"{'CLIENTS':>15}: {' | '.join([str(x) for x in self.clients])}\n")
 
   def _setup(self):
     self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -32,11 +32,11 @@ class Server():
     print("[*] Expected number of devices have been connected")
   
   def close(self):
-    if self.sock is None: raise Exception("Socket is <None>: Can't <close>")
+    if self.sock is None: raise Exception("[-] Socket is <None>: Can't <close>")
     self.sock.close()
 
   def send(self, dat):
-    if self.sock is None: raise Exception("Socket is <None>: Can't <send>")
+    if self.sock is None: raise Exception("[-] Socket is <None>: Can't <send>")
     if not isinstance(dat, bytes): dat = dat.encode()
     for conn in self.clients: conn.send(dat)
 
@@ -47,5 +47,4 @@ class Server():
 if __name__ == "__main__":
   #--testing
   s = Server()
-  print(s)
-  #s.test()
+  s.test()
