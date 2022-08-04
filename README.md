@@ -9,9 +9,10 @@ The Trifecta:
 ## Raspberry-PI NXP Util
 
 * Basic `uart` communication system (micro-e board -> raspberry-pi)
-* `wifi` communication system (raspberry-pi -> laptop(s))
+* `wifi` communication system (raspberry-pi -> client(s))
+* optional `logging`
 
 ## Python3 GUI Util for Line Scanning Visualization
 
-* Receive data trasmitted over wifi connection for logging
-* Visualize data captured by the car's `LineScan` camera.
+* Receive data trasmitted over `wifi` connection for `logging`
+* Visualize data captured by the car's `LineScan` camera
