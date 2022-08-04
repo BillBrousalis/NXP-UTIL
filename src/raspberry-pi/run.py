@@ -6,6 +6,7 @@ def get_config():
   import os
   import yaml
   # run symlink to get path right
+  #TODO: make it work on both symlink and file itself
   with open("config/config.yaml", "r") as f:
     return yaml.safe_load(f)
 
@@ -25,6 +26,8 @@ def main():
       if config["LOGGING"] == "RPI":
         #TODO: deal with logging on rpi
         pass
+      # Until its actually written
+      break
   except KeyboardInterrupt:
     print("\n[-] Closing server & exiting...")
     s.close()
