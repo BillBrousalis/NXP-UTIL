@@ -6,6 +6,9 @@ class Client():
     self.host, self.port = '192.168.4.1', 9001
     self.test()
 
+  def readbytes(self, n=1):
+    
+
   def test(self):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((self.host, self.port))

@@ -2,17 +2,25 @@
 import socket
 
 class Server():
-  MAX_DEV = 1
-  def __init__(self):
+  def __init__(self, host='', port=9001, max_dev=1):
     print("[*] Starting Server...")
-    self.host, self.port = '', 9001
+    self.MAX_DEV = max_dev
+    self.HOST, self.PORT = host, port
     self.sock = None
     self.clients = []
     self._setup()
 
+  def __str__(self):
+    return ( "[DEBUG]\n"
+            f"HOST: {self.HOST:>10}\n"
+            f"PORT: {self.PORT:>10}\n"
+            f"MAX DEV: {self.MAX_DEV:>10}\n"
+            f"SOCK: {self.sock:>10}\n"
+            f"CLIENTS: {self.clients:>10}\n")
+
   def _setup(self):
     self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    self.sock.bind((self.host, self.port))
+    self.sock.bind((self.HOST, self.PORT))
     self.sock.listen(self.MAX_DEV)
     self.accept_connections()
 
@@ -30,24 +38,14 @@ class Server():
   def send(self, dat):
     if self.sock is None: raise Exception("Socket is <None>: Can't <send>")
     if not isinstance(dat, bytes): dat = dat.encode()
-    for conn in self.clients:
-      conn.send(dat)
+    for conn in self.clients: conn.send(dat)
 
   def test(self):
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-      s.bind((self.host, self.port))
-      s.listen(1)
-      conn, addr = s.accept()
-      with conn:
-        print(f"Connected by {addr}")
-        while 1:
-          dat = conn.recv(1024)
-          if not dat: break
-          print(dat)
+    self.send("Hello World")
+    self.close()
 
 if __name__ == "__main__":
   #--testing
   s = Server()
-  s.send(b'eimai o server kalispera')
-  s.close()
+  print(s)
   #s.test()
