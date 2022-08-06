@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-import socket
+# Simple wrapper
+def check(func):
+  def wrapper(*args):
+    if args[0].sock is None: raise Exception(f"[-] Socket is <None>: Can't {str(func)}")
+    func(*args)
+  return wrapper
 
 class Server():
   def __init__(self, host='', port=9001, max_dev=1):
@@ -19,11 +24,13 @@ class Server():
             f"{'CLIENTS':>15}: {' | '.join([str(x) for x in self.clients])}\n")
 
   def _setup(self):
+    import socket
     self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     self.sock.bind((self.HOST, self.PORT))
     self.sock.listen(self.MAX_DEV)
     self.accept_connections()
 
+  @check
   def accept_connections(self):
     for i in range(self.MAX_DEV):
       conn, addr = self.sock.accept()
@@ -31,12 +38,12 @@ class Server():
       print(f"[+] New Client Connected: [ {addr[0]} : {addr[1]} ]")
     print("[*] Expected number of devices have been connected")
   
+  @check
   def close(self):
-    if self.sock is None: raise Exception("[-] Socket is <None>: Can't <close>")
     self.sock.close()
 
+  @check
   def send(self, dat):
-    if self.sock is None: raise Exception("[-] Socket is <None>: Can't <send>")
     if not isinstance(dat, bytes): dat = dat.encode()
     for conn in self.clients: conn.send(dat)
 
