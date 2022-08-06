@@ -2,7 +2,7 @@
 import socket
 
 class Client():
-  def __init__(self, host="192.168.1.10", 9001):
+  def __init__(self, host="192.168.1.10", port=9001):
     print("[*] Starting Client...")
     self.HOST, self.PORT = host, port
     self.sock = None
