@@ -6,6 +6,7 @@
 # Year        : 2022
 # Description : Graphical User Interface For LineScan Camera Data Visualizatin
 #==============================================================================
+import threading
 import tkinter as tk
 import tkinter.ttk as ttk
 import tkinter.font as tkFont
@@ -26,7 +27,8 @@ class Gui(tk.Tk):
     self._FONT = tkFont.Font(family='Cascadia Code', size=13, weight='bold')
     self._FONTSMALL = tkFont.Font(family='Cascadia Code', size=10, weight='bold')
     self.draw_gui()
-
+    self.setup()
+  
   def draw_gui(self):
     self.canvas = tk.Canvas(self, width=self._WIDTH, height=self._HEIGHT, bg=self._COLORS['white'])
     self.canvas.pack()
@@ -39,7 +41,7 @@ class Gui(tk.Tk):
     steerlb = tk.Label(self.canvas, text='Steering Angle:', font=self._FONT, bg=self._COLORS['white'])
     steerlb.place(anchor='n', relx=0.8, rely=0.05, relwidth=0.225, relheight=0.05)
     # Steering value displayed
-    steervallb = tk.Label(self.canvas, text='[ 0.0 ]', font=self._FONT, bg=self._COLORS['white'])
+    steervallb = tk.Label(self.canvas, text='[ 0 ]', font=self._FONT, bg=self._COLORS['white'])
     steervallb.place(anchor='n', relx=0.85, rely=0.1, relwidth=0.225, relheight=0.05)
     # Horizontal separator
     hsep = ttk.Separator(self.canvas, orient='horizontal')
@@ -48,14 +50,13 @@ class Gui(tk.Tk):
     speedlb = tk.Label(self.canvas, text='Speed:', font=self._FONT, bg=self._COLORS['white'])
     speedlb.place(anchor='n', relx=0.738, rely=0.2, relwidth=0.1, relheight=0.05)
     # Speed value displayed
-    speedvallb = tk.Label(self.canvas, text='[ 0.0 ]', font=self._FONT, bg=self._COLORS['white'])
+    speedvallb = tk.Label(self.canvas, text='[ 0 ]', font=self._FONT, bg=self._COLORS['white'])
     speedvallb.place(anchor='n', relx=0.85, rely=0.25, relwidth=0.225, relheight=0.05)
     # Version label
     vers = tk.Label(self.canvas, text='[ v0.1 ]', font=self._FONTSMALL, bg=self._COLORS['white'])
     vers.place(anchor='n', relx=0.95, rely=0.955, relwidth=0.09, relheight=0.04)
 
   def draw_graph(self):
-    csfont = {'fontname': 'Cascadia Code'}
     self.fig = plt.Figure()
     self.fig.set_facecolor(self._COLORS['white'])
     self.graphcanvas = FigureCanvasTkAgg(self.fig, master=self.canvas)
@@ -63,6 +64,21 @@ class Gui(tk.Tk):
     self.ax = self.fig.add_subplot(111)
     self.ax.grid()
     self.ax.set_title('LineScan Readings')
+  
+  def setup(self):
+    self.DATA = {'LINE': [],
+                 'STEER': 0,
+                 'SPEED': 0
+    }
+
+  def tUpdatelbs(self):
+    pass
+    
+  def tReaddat(self):
+    pass
+
+  def tAnim(self):
+    pass
 
   def exit(self):
     self.quit()
