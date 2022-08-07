@@ -1,6 +1,7 @@
 # NXP CUP Util
 
 **Debugging the NXP Cup Car, and visualizing data**.
+
 Avoid fiddling with embedded code and have `Python3` aid you in algorithm development.
 
 **The Trifecta**:
