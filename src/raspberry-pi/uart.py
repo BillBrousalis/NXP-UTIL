@@ -36,8 +36,9 @@ class Uart():
 
 if __name__ == "__main__":
   #--testing
-  u = Uart(dev='COM5', baud=9600)
+  u = Uart()
   import time
   while 1:
     u.send(b'HELLO\n')
+    print(u.recv(6))
     time.sleep(1)
