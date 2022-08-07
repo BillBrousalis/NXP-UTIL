@@ -18,21 +18,21 @@ def get_config():
 def main():
   config = get_config()
   s = server.Server(port=config["RPI-PORT"], max_dev=config["MAX-DEV"])
-  u = uart.Uart(baud=config['BAUD'])
+  u = uart.Uart(baud=config['UART-BAUD'])
   buf = "Hello World" #init with None when ready
   try:
     while 1: # mainloop
       #TODO: implement uart.py 
-      #buf = read uart bytes
+      buf = u.recvline()
+      print(f'run.py got : {buf}')
       s.send(buf)
+
       if config["COMMANDS"]:
         #TODO: deal with commands
         pass
       if config["LOGGING"] == "RPI":
         #TODO: deal with logging on rpi
         pass
-      # Until its actually written
-      break
   except KeyboardInterrupt:
     print("\n[-] Closing server & exiting...")
     s.close()
