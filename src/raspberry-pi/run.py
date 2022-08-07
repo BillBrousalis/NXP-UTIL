@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
+import os
 import uart
 import server
 
+def get_base_dir():
+  import pathlib
+  for p in pathlib.Path(__file__).parents:
+    if os.path.basename(p) == "NXP-UTIL": return p
+  raise Exception("[-] Can't find base repository directory (Looking for NXP-UTIL).")
+
 def get_config():
-  import os
   import yaml
-  # run symlink to get path right
-  #TODO: make it work on both symlink and file itself
-  with open("config/config.yaml", "r") as f:
+  with open(os.path.join(get_base_dir(), "config/config.yaml"), "r") as f:
     return yaml.safe_load(f)
 
 def main():

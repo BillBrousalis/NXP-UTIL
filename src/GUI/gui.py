@@ -6,12 +6,31 @@
 # Year        : 2022
 # Description : Graphical User Interface For LineScan Camera Data Visualizatin
 #==============================================================================
+import os
 import threading
 import tkinter as tk
 import tkinter.ttk as ttk
 import tkinter.font as tkFont
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
+def get_base_dir():
+  import pathlib
+  for p in pathlib.Path(__file__).parents:
+    if os.path.basename(p) == "NXP-UTIL": return p
+  raise Exception("[-] Can't find base repository directory (Looking for NXP-UTIL).")
+
+def get_config():
+  import yaml
+  with open(os.path.join(get_base_dir(), "config/config.yaml"), "r") as f:
+    return yaml.safe_load(f)
+
+def threadexec(func):
+  def wrapper(*args, **kwargs):
+    t = threading.Thread(target=func, args=args, kwargs=kwargs)
+    t.start()
+    return t
+  return wrapper
 
 class Gui(tk.Tk):
   _TITLE = 'LINESCAN VISUALIZATION'
@@ -21,6 +40,7 @@ class Gui(tk.Tk):
             'black': '#0f0f0f',
             'grey': '#707070'
   }
+  _CONFIG = get_config()
   def __init__(self):
     super().__init__()
     self.title(self._TITLE)
@@ -53,7 +73,7 @@ class Gui(tk.Tk):
     speedvallb = tk.Label(self.canvas, text='[ 0 ]', font=self._FONT, bg=self._COLORS['white'])
     speedvallb.place(anchor='n', relx=0.85, rely=0.25, relwidth=0.225, relheight=0.05)
     # Version label
-    vers = tk.Label(self.canvas, text='[ v0.1 ]', font=self._FONTSMALL, bg=self._COLORS['white'])
+    vers = tk.Label(self.canvas, text=f"[ v{self._CONFIG['VERSION']} ]", font=self._FONTSMALL, bg=self._COLORS['white'])
     vers.place(anchor='n', relx=0.95, rely=0.955, relwidth=0.09, relheight=0.04)
 
   def draw_graph(self):
@@ -71,16 +91,22 @@ class Gui(tk.Tk):
                  'SPEED': 0
     }
 
+  @threadexec
   def tUpdatelbs(self):
+    import time
+    time.sleep(10)
     pass
     
+  @threadexec
   def tReaddat(self):
     pass
 
+  @threadexec
   def tAnim(self):
     pass
 
   def exit(self):
+    print("[-] Exiting...")
     self.quit()
     self.destroy()
 

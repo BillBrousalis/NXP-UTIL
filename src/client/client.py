@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-import socket
+def check(func):
+  def wrapper(*args):
+    if args[0].sock is None: raise Exception(f"[-] Socket is <None>. Can't {str(func)}")
+    func(*args)
+  return wrapper
 
 class Client():
   def __init__(self, host="192.168.1.10", port=9001):
@@ -10,20 +14,21 @@ class Client():
     self.test()
 
   def _setup(self):
+    import socket
     self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     self.sock.connect((self.HOST, self.PORT))
     print("[*] Connection Successfull")
 
+  @check
   def close(self):
-    if self.sock is None: raise Exception("[-] Sock is None. Can't <close>")
     self.sock.close()
 
+  @check
   def readbytes(self, n=1):
-    if self.sock is None: raise Exception("[-] Sock is None. Can't <readbytes>")
     return self.sock.recv(n)
 
+  @check
   def send(self, dat):
-    if self.sock is None: raise Exception("[-] Sock is None. Can't <send>")
     if not isinstance(dat, bytes): dat = dat.encode()
     self.sock.send(dat)
 
