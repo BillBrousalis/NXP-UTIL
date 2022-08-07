@@ -7,7 +7,9 @@ def generate_config():
                  "LOGGING-PATH-RPI": "logs/rpi_logs.csv",
                  "LOGGING-PATH-CLIENT": "logs/client_logs.csv",
                  "LOGGING": None,   # "PI" / "CLIENT"
-                 "COMMANDS": False  # / True
+                 "COMMANDS": False,  # / True
+                 "VERSION": 0.1,
+                 "UART-BAUD": 115200
   }
   fname = "config.yaml"
 

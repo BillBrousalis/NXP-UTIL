@@ -4,9 +4,9 @@
 # Author      : Basilis Mprousalis
 # Version     : 0.1
 # Year        : 2022
-# Description : Graphical User Interface For LineScan Camera Data Visualizatin
+# Description : Graphical User Interface For LineScan Camera Data Visualization
 #==============================================================================
-import os, sys
+import os
 import time
 import random
 import threading
@@ -16,9 +16,11 @@ import tkinter.font as tkFont
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+##### MODULES #####
 import client
 import processing
 
+# Get base dir of repo
 def get_base_dir():
   import pathlib
   for p in pathlib.Path(__file__).parents:
@@ -30,6 +32,8 @@ def get_config():
   with open(os.path.join(get_base_dir(), "config/config.yaml"), "r") as f:
     return yaml.safe_load(f)
 
+# Threads to keep GUI running smoothly
+# while updating values displayed
 def threadexec(func):
   def wrapper(*args, **kwargs):
     t = threading.Thread(target=func, args=args, kwargs=kwargs)
@@ -40,6 +44,7 @@ def threadexec(func):
 
 class Gui(tk.Tk):
   _TITLE = 'LINESCAN DATA VISUALIZATION'
+  # Gui dims
   _WIDTH = 700
   _HEIGHT = 500
   _COLORS = {'white': '#fafafa',
@@ -47,15 +52,18 @@ class Gui(tk.Tk):
             'grey': '#707070',
             'light blue': '#d8e6f2'
   }
+  # Top-left icon
   _ICON = os.path.join(get_base_dir(), 'assets/icon.ico')
   _CONFIG = get_config()
   def __init__(self):
     super().__init__()
     self.title(self._TITLE)
     self.iconbitmap(self._ICON)
+    # Initialize fonts after tk itself has been initialized
     self._FONT = tkFont.Font(family='Cascadia Code', size=13, weight='bold')
     self._FONTSMALL = tkFont.Font(family='Cascadia Code', size=10, weight='bold')
     self.draw_gui()
+    # Data-specific
     self.setup()
   
   def draw_gui(self):
@@ -87,9 +95,8 @@ class Gui(tk.Tk):
     self.but.bind('<Leave>', lambda event, x=self.but : self.but_hover_leave(x))
     self.but.place(anchor='n', relx=0.85, rely=0.03, relwidth=0.2, relheight=0.05)
     # Version label
-    vers = tk.Label(self.canvas, text=f"[ Bill Brousalis  v{self._CONFIG['VERSION']} ]", font=self._FONTSMALL, bg=self._COLORS['white'])
-    #vers.place(anchor='n', relx=0.95, rely=0.955, relwidth=0.09, relheight=0.04)
-    vers.place(anchor='n', relx=0.85, rely=0.955, relwidth=0.27, relheight=0.04)
+    vers = tk.Label(self.canvas, text=f"[ v{self._CONFIG['VERSION']} ]", font=self._FONTSMALL, bg=self._COLORS['white'])
+    vers.place(anchor='n', relx=0.95, rely=0.955, relwidth=0.09, relheight=0.04)
 
   def draw_graph(self):
     self.fig = plt.Figure()
@@ -106,8 +113,9 @@ class Gui(tk.Tk):
                  'SPEED': 0
     }
     self.isrunning = False
-    self.client = client.Client()
+    #self.client = client.Client()
 
+  # Update Gui steer / speed VALUE labels
   @threadexec
   def tUpdatelbs(self):
     while 1:
@@ -116,27 +124,31 @@ class Gui(tk.Tk):
       print("[ Thread ] tUpdatelbs()")
       time.sleep(0.5)
 
+  # Read / store incoming data
   @threadexec
   def tReaddat(self):
     while 1:
       if not self.isrunning: return
-      self.DATA['LINE'] = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-PER-LINE']))
+      #self.DATA['LINE'] = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-PER-LINE']))
       # TODO: Implement:
       #self.Data['STEER'] = 
       #self.Data['SPEED'] = 
       print("[ Thread ] tReaddat()")
       time.sleep(1)
 
+  # Graphing
   @threadexec
   def tAnim(self):
-    self.anim = FuncAnimation(self.fig, self.update_graph, interval=250)
+    self.anim = FuncAnimation(self.fig, self.update_graph, interval=10)
     self.anim._start()
   
   def update_graph(self, i):
-    print("[ Thread ] ANIM()")
+    print("[ Thread ] tAnim()")
     if not self.isrunning: self.anim.event_source.stop()
+    # clear previous graph
     self.ax.clear()
     datx, daty = [0, 50, 100], [random.randint(0, 2) for _ in range(3)]
+    # plot new
     self.ax.plot(datx, daty)
 
   # Start-Stop button functionality
@@ -146,12 +158,13 @@ class Gui(tk.Tk):
       self.but['text'] = 'START'
     else:
       self.isrunning = True
+      # Start threads
       self.tUpdatelbs()
       self.tReaddat()
       self.tAnim()
       self.but['text'] = 'STOP'
 
-  # Visual
+  # Visual - button highlight
   def but_hover(self, button, color=_COLORS['light blue']): button.configure(bg=color)
   def but_hover_leave(self, button, color=_COLORS['white']): button.configure(bg=color)
 
@@ -160,7 +173,7 @@ class Gui(tk.Tk):
     self.quit()
     self.destroy()
 
-#--setup
+# spawn Gui instance
 def spawn_gui():
   g = Gui()
   g.resizable(False, False)
