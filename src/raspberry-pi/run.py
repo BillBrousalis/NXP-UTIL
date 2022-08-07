@@ -22,8 +22,7 @@ def main():
   buf = "Hello World" #init with None when ready
   try:
     while 1: # mainloop
-      #TODO: implement uart.py 
-      buf = u.recvline()
+      buf = u.recvline().strip()
       print(f'run.py got : {buf}')
       s.send(buf)
 
