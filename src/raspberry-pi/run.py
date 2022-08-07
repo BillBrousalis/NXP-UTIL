@@ -17,7 +17,7 @@ def get_config():
 def main():
   config = get_config()
   s = server.Server(port=config["RPI-PORT"], max_dev=config["MAX-DEV"])
-  u = uart.Uart()
+  u = uart.Uart(baud=config['BAUD'])
   buf = "Hello World" #init with None when ready
   try:
     while 1: # mainloop
