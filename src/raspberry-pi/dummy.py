@@ -9,4 +9,4 @@ if __name__ == '__main__':
     # increased odds of seeing 'white'
     rdat = [random.choice([b'0', b'1', b'1']) for _ in range(128)]
     u.send(b''.join(rdat)+b'\n')
-    time.sleep(1)
+    time.sleep(0.01)

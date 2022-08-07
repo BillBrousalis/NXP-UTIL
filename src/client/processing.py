@@ -2,13 +2,14 @@
 
 def decode(dat):
   # decode when 16 bytes are being send instead of 128
+  # TODO: implement 16-byte into 128 bit dec
   return list([int(x) for x in dat.decode()])
 
 # prep data into multi-part graph
+# TODO: there has to be a better way to write this
 def prep_graph_dat(dat):
   colors = {'white': 1, 'black': 0}
   draw = colors['white']
-  # dat: array of ints 0 / 1
   y, x = [], []
   tmpy, tmpx = [], []
   prev = None
@@ -22,6 +23,5 @@ def prep_graph_dat(dat):
     tmpy.append(val)
     tmpx.append(idx)
     prev = val
-  print(x)
-  print(y)
+  # x, y -> list of lists: plot each sublist ex. (x[0], y[0])
   return (x, y)
