@@ -2,7 +2,7 @@
 def check(func):
   def wrapper(*args):
     if args[0].sock is None: raise Exception(f"[-] Socket is <None>. Can't {str(func)}")
-    func(*args)
+    return func(*args)
   return wrapper
 
 class Client():
