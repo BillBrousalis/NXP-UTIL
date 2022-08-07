@@ -2,13 +2,13 @@
 
 **Debugging the NXP Cup Car, and visualizing data**.
 
-Avoid fiddling with embedded code and have `Python3` aid you in algorithm development.
+Avoid fiddling with embedded code and have `Python3` aid you in your algorithm development.
 
 **The Trifecta**:
 
 ![](assets/the_trifecta.png)
 
-## TL;DR
+## TL;DR: Setup
 Raspberry-PI:
 
 ```
@@ -27,8 +27,8 @@ python3 CarDbgGUI.py
 
 ## Basic Idea
 
-* Car to Raspberry-PI: `UART` Connection
-* Raspberry-PI to Clients: `WIFI` Connection
+* Car --> Raspberry-PI: `UART` Connection
+* Raspberry-PI --> Client(s): `WIFI` Connection
 
 Transmit your car's **crucial data**, such as:
   * Linescan Camera Output
@@ -68,9 +68,11 @@ Makes the `ip:port` connection to the server.
 
 Visualizing linescan output in real-time using `Matplotlib` graphing.
 
+Steering angle and Vehicle speed available for viewing.
+
 ## (optional) COMMANDS mode:
 
-[TODO]: Car can accept commands through UART to access underlying API.
+[TODO]: Car can accept commands through WIFI->PI->UART to access underlying API.
 
 Useful for testing algorithms in python3 instead of writing massive amounts of C code.
 
