@@ -11,7 +11,6 @@ class Client():
     self.HOST, self.PORT = host, port
     self.sock = None
     self._setup()
-    self.test()
 
   def _setup(self):
     import socket

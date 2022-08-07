@@ -6,7 +6,7 @@
 # Year        : 2022
 # Description : Graphical User Interface For LineScan Camera Data Visualizatin
 #==============================================================================
-import os
+import os, sys
 import time
 import random
 import threading
@@ -16,6 +16,8 @@ import tkinter.font as tkFont
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import client
+import processing
 
 def get_base_dir():
   import pathlib
@@ -104,6 +106,7 @@ class Gui(tk.Tk):
                  'SPEED': 0
     }
     self.isrunning = False
+    self.client = client.Client()
 
   @threadexec
   def tUpdatelbs(self):
@@ -117,6 +120,10 @@ class Gui(tk.Tk):
   def tReaddat(self):
     while 1:
       if not self.isrunning: return
+      self.DATA['LINE'] = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-PER-LINE']))
+      # TODO: Implement:
+      #self.Data['STEER'] = 
+      #self.Data['SPEED'] = 
       print("[ Thread ] tReaddat()")
       time.sleep(1)
 
