@@ -19,7 +19,7 @@ def main():
   config = get_config()
   s = server.Server(port=config["RPI-PORT"], max_dev=config["MAX-DEV"])
   u = uart.Uart(baud=config['UART-BAUD'])
-  buf = "Hello World" #init with None when ready
+  buf = None
   try:
     while 1: # mainloop
       buf = u.recvline().strip()
