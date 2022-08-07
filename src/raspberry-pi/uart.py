@@ -24,11 +24,7 @@ class Uart():
 
   @check
   def recvline(self):
-    line = self.ser.readline()
-    print('type', type(line))
-    print(f'before return: {line}')
-    return line
-    #return self.ser.readline()
+    return self.ser.readline()
 
   @check
   def send(self, dat):
@@ -42,8 +38,4 @@ class Uart():
 
 if __name__ == "__main__":
   #--testing
-  u = Uart()
-  import time
-  while 1:
-    u.send(b'hello rasp')
-    time.sleep(1)
+  u = Uart(baud=115200)
