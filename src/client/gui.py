@@ -131,21 +131,20 @@ class Gui(tk.Tk):
     while 1:
       if not self.isrunning: return
       self.DATA['LINE'] = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-PER-LINE']))
-      print("[ DEBUG ] DATA:\n{self.DATA['LINE']}")
+      #print("[ DEBUG ] DATA:\n{self.DATA['LINE']}")
       # TODO: Implement:
       #self.Data['STEER'] = 
       #self.Data['SPEED'] = 
-      print("[ Thread ] tReaddat()")
-      time.sleep(1)
+      #print("[ Thread ] tReaddat()")
+      #time.sleep(1)
 
   # Graphing
   @threadexec
   def tAnim(self):
-    self.anim = FuncAnimation(self.fig, self.update_graph, interval=200)
+    self.anim = FuncAnimation(self.fig, self.update_graph, interval=10)
     self.anim._start()
   
   def update_graph(self, i):
-    print("[ Thread ] tAnim()")
     if not self.isrunning: self.anim.event_source.stop()
     # clear previous graph
     self.ax.clear()
