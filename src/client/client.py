@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 def check(func):
-  def wrapper(*args):
+  def wrapper(*args, **kwargs):
     if args[0].sock is None: raise Exception(f"[-] Socket is <None>. Can't {str(func)}")
-    return func(*args)
+    return func(*args, **kwargs)
   return wrapper
 
 class Client():
