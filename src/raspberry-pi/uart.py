@@ -6,7 +6,7 @@ def check(func):
   return wrapper
 
 class Uart():
-  def __init__(self, dev='/dev/ttyS0', baud=9600):
+  def __init__(self, dev='/dev/ttyS0', baud=115200):
     self.ser = None
     self.DEV, self.BAUD = dev, baud
     print(self.DEV, self.BAUD)
@@ -37,6 +37,4 @@ class Uart():
 
 if __name__ == "__main__":
   #--testing
-  u = Uart(dev='COM5', baud=115200)
-  u.send(b'hello\n')
-  print(u.recvline())
+  u = Uart()
