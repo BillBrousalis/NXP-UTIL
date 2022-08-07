@@ -22,7 +22,7 @@ class Uart():
 
   @check
   def recv(self, n=1):
-    return self.ser.read().decode()
+    return self.ser.read(n)
 
   @check
   def send(self, dat):
@@ -36,4 +36,3 @@ class Uart():
 if __name__ == "__main__":
   #--testing
   u = Uart()
-  u.test()
