@@ -9,7 +9,6 @@ class Uart():
   def __init__(self, dev='/dev/ttyS0', baud=115200):
     self.ser = None
     self.DEV, self.BAUD = dev, baud
-    print(self.DEV, self.BAUD)
     self._setup()
 
   def _setup(self):
@@ -20,6 +19,7 @@ class Uart():
 
   @check
   def close(self):
+    print("[*] Closing UART")
     self.ser.close()
 
   @check

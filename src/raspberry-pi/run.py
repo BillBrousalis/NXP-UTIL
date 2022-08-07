@@ -19,9 +19,10 @@ def argparser():
   import sys
   if len(sys.argv) < 2: return None
   if sys.argv[1] == '-h': 
-    print('-h       Help'
-          '--dev    specify expected number of clients'
-          '   ex.   ./run.py --dev=3')
+    print('Optional Commands:\n'
+          '   -h      Help\n'
+          '--dev      specify expected number of clients\n'
+          '   ex.     ./run.py --dev=3\n')
     exit()
   elif '--dev=' in sys.argv[1]: return int(sys.argv[1].split('=')[1])
   else: raise Exception(f'Unknown argument: {sys.argv[1]}')
