@@ -22,12 +22,13 @@ class Uart():
 
   @check
   def recv(self, n=1):
-    return self.ser.read().decode()
+    return self.ser.read(n)
 
   @check
   def send(self, dat):
     if not isinstance(dat, bytes): dat = dat.encode()
     self.ser.write(dat)
+    print(dat, 'sent')
 
   def test(self):
     self.send("Hello World")
@@ -35,5 +36,8 @@ class Uart():
 
 if __name__ == "__main__":
   #--testing
-  u = Uart()
-  u.test()
+  u = Uart(dev='COM5', baud=9600)
+  import time
+  while 1:
+    u.send(b'HELLO\n')
+    time.sleep(1)
