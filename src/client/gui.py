@@ -56,6 +56,7 @@ class Gui(tk.Tk):
   _ICON = os.path.join(get_base_dir(), 'assets/icon.ico')
   _CONFIG = get_config()
   def __init__(self):
+    print('[*] MAKE SURE SERVER IS RUNNING FIRST [*]')
     super().__init__()
     self.title(self._TITLE)
     self.iconbitmap(self._ICON)
@@ -113,7 +114,7 @@ class Gui(tk.Tk):
                  'SPEED': 0
     }
     self.isrunning = False
-    #self.client = client.Client()
+    self.client = client.Client()
 
   # Update Gui steer / speed VALUE labels
   @threadexec
@@ -129,7 +130,8 @@ class Gui(tk.Tk):
   def tReaddat(self):
     while 1:
       if not self.isrunning: return
-      #self.DATA['LINE'] = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-PER-LINE']))
+      self.DATA['LINE'] = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-PER-LINE']))
+      print("[ DEBUG ] DATA:\n{self.DATA['LINE']}")
       # TODO: Implement:
       #self.Data['STEER'] = 
       #self.Data['SPEED'] = 
@@ -139,7 +141,7 @@ class Gui(tk.Tk):
   # Graphing
   @threadexec
   def tAnim(self):
-    self.anim = FuncAnimation(self.fig, self.update_graph, interval=10)
+    self.anim = FuncAnimation(self.fig, self.update_graph, interval=200)
     self.anim._start()
   
   def update_graph(self, i):
@@ -147,9 +149,12 @@ class Gui(tk.Tk):
     if not self.isrunning: self.anim.event_source.stop()
     # clear previous graph
     self.ax.clear()
-    datx, daty = [0, 50, 100], [random.randint(0, 2) for _ in range(3)]
+    # testing - random plot
+    #datx, daty = [0, 50, 100], [random.randint(0, 2) for _ in range(3)]
+    datx, daty = processing.prep_graph_dat(self.DATA['LINE'])
     # plot new
-    self.ax.plot(datx, daty)
+    for gx, gy in zip(datx, daty):
+      self.ax.plot(gx, gy, color='black', linewidth=8)
 
   # Start-Stop button functionality
   def but_func(self):
@@ -159,7 +164,7 @@ class Gui(tk.Tk):
     else:
       self.isrunning = True
       # Start threads
-      self.tUpdatelbs()
+      #self.tUpdatelbs()
       self.tReaddat()
       self.tAnim()
       self.but['text'] = 'STOP'

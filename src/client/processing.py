@@ -2,11 +2,11 @@
 
 def decode(dat):
   # decode when 16 bytes are being send instead of 128
-  return dat
+  return list([int(x) for x in dat.decode()])
 
 # prep data into multi-part graph
 def prep_graph_dat(dat):
-  colors = {'white': 1, 'black': 2}
+  colors = {'white': 1, 'black': 0}
   draw = colors['white']
   # dat: array of ints 0 / 1
   y, x = [], []
@@ -22,4 +22,6 @@ def prep_graph_dat(dat):
     tmpy.append(val)
     tmpx.append(idx)
     prev = val
+  print(x)
+  print(y)
   return (x, y)
