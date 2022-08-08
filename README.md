@@ -6,7 +6,7 @@ Avoid fiddling with embedded code and have `Python3` aid you in your algorithm d
 
 **The Trifecta**:
 
-![](assets/the_trifecta.png)
+![](assets/trifecta.png)
 
 ## TL;DR: Setup
 Install required `Python3` packages:
