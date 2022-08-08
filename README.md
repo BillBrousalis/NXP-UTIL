@@ -35,8 +35,8 @@ python3 CarDbgGUI.py
 
 ## Basic Idea
 
-*          Car --> Raspberry-PI : `UART` Connection
-* Raspberry-PI --> Client(s)    : `WIFI` Connection
+* Car          --> Raspberry-PI   : `UART` Connection
+* Raspberry-PI --> Client(s)      : `WIFI` Connection
 
 Transmit your car's **crucial data**, such as:
   * Linescan Camera Output
