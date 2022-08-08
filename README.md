@@ -35,8 +35,8 @@ python3 CarDbgGUI.py
 
 ## Basic Idea
 
-* Car          --> Raspberry-PI   : `UART` Connection
-* Raspberry-PI --> Client(s)      : `WIFI` Connection
+* Car --> Raspberry-PI: `UART` Connection
+* Raspberry-PI --> Client(s): `WIFI` Connection
 
 Transmit your car's **crucial data**, such as:
   * Linescan Camera Output
@@ -60,7 +60,7 @@ simultaneously.
 
 Basic `dnsmasq` / `hostapd` setup for WIFI access.
 
-**Optional**: Use systemd to run on startup
+**Optional**: Use `systemd` to run on startup.
 
 ## Graphical User Interface
 
@@ -72,7 +72,7 @@ Steering angle and Vehicle speed available for viewing.
 
 ## COMMANDS mode [ Optional ]:
 
-[TODO]: Car can accept commands through WIFI->PI->UART to access underlying API.
+[TODO]: Car can accept commands through WIFI-->PI-->UART to access underlying API.
 
 Useful for testing algorithms in python3 instead of writing massive amounts of C code.
 
