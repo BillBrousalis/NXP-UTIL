@@ -9,6 +9,14 @@ Avoid fiddling with embedded code and have `Python3` aid you in your algorithm d
 ![](assets/the_trifecta.png)
 
 ## TL;DR: Setup
+Install required `Python3` packages:
+
+```
+pip install -r requirements.txt
+```
+
+Set up your configuration by editing `config/config.yaml`.
+
 Raspberry-PI:
 
 ```
@@ -27,8 +35,8 @@ python3 CarDbgGUI.py
 
 ## Basic Idea
 
-* Car --> Raspberry-PI: `UART` Connection
-* Raspberry-PI --> Client(s): `WIFI` Connection
+*          Car --> Raspberry-PI : `UART` Connection
+* Raspberry-PI --> Client(s)    : `WIFI` Connection
 
 Transmit your car's **crucial data**, such as:
   * Linescan Camera Output
@@ -37,15 +45,7 @@ Transmit your car's **crucial data**, such as:
 
 over to your machine for viewing and proccessing, all in `real-time`.
 
-## Getting Started
-
-Install required `Python3` packages:
-
-```
-pip install -r requirements.txt
-```
-
-Set up your configuration by editing `config/config.yaml`.
+## Building
 
 If modifications are needed, you can rebuild your `.exe` / `binary` executable:
 
@@ -60,7 +60,7 @@ simultaneously.
 
 Basic `dnsmasq` / `hostapd` setup for WIFI access.
 
-Optional: Use systemd to run on startup
+**Optional**: Use systemd to run on startup
 
 ## Graphical User Interface
 
@@ -70,12 +70,12 @@ Visualizing linescan output in real-time using `Matplotlib` graphing.
 
 Steering angle and Vehicle speed available for viewing.
 
-## (optional) COMMANDS mode:
+## COMMANDS mode [ Optional ]:
 
 [TODO]: Car can accept commands through WIFI->PI->UART to access underlying API.
 
 Useful for testing algorithms in python3 instead of writing massive amounts of C code.
 
-## (optional) LOGGING mode:
+## LOGGING mode [ Optional ]:
 
 [TODO]: Logging option (None / "PI" / "CLIENT") to keep logs in selected device.
