@@ -38,7 +38,7 @@ def main():
   buf = None
   try:
     while 1: # mainloop
-      buf = u.recvline().strip()
+      buf = u.recv(config['BYTES-PER-LINE'])
       print(f'[ DEBUG ] UART Received:\n{buf}')
       # Pass buf to clients
       s.send(buf)

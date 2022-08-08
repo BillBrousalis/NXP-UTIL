@@ -23,8 +23,8 @@ class Uart():
     self.ser.close()
 
   @check
-  def recvline(self):
-    return self.ser.readline()
+  def recv(self, n=1):
+    return self.ser.read(size=n)
 
   @check
   def send(self, dat):

@@ -131,6 +131,7 @@ class Gui(tk.Tk):
     while 1:
       if not self.isrunning: return
       self.DATA['LINE'] = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-PER-LINE']))
+      if len(self.DATA['LINE']) != 128: raise Exception(f"ERROR DATA NOT 128 BYTES: {len(self.DATA['LINE'])}")
       #print("[ DEBUG ] DATA:\n{self.DATA['LINE']}")
       # TODO: Implement:
       #self.Data['STEER'] = 
@@ -148,9 +149,9 @@ class Gui(tk.Tk):
     if not self.isrunning: self.anim.event_source.stop()
     # clear previous graph
     self.ax.clear()
-    # testing - random plot
-    #datx, daty = [0, 50, 100], [random.randint(0, 2) for _ in range(3)]
     datx, daty = processing.prep_graph_dat(self.DATA['LINE'])
+    print(f'DATX:\n{datx}')
+    print(f'DATY:\n{daty}')
     # plot new
     for gx, gy in zip(datx, daty):
       self.ax.plot(gx, gy, color='black', linewidth=8)
