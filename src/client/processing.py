@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
-
 def decode(dat):
   # decode when 16 bytes are being send instead of 128
   # TODO: implement 16-byte into 128 bit dec
-  #return list([int(x) for x in dat.decode()])
-  return [1 if b > 127 else 0 for b in dat]
+  return [1 if b > 90 else 0 for b in dat]
 
 # prep data into multi-part graph
-# TODO: there has to be a better way to write this
 def prep_graph_dat(dat):
   colors = {'white': 1, 'black': 0}
   draw = colors['white']

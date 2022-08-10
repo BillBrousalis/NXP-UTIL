@@ -7,8 +7,6 @@
 # Description : Graphical User Interface For LineScan Camera Data Visualization
 #==============================================================================
 import os
-import time
-import random
 import threading
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -16,7 +14,7 @@ import tkinter.font as tkFont
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-##### MODULES #####
+# MODULES
 import client
 import processing
 
@@ -24,12 +22,12 @@ import processing
 def get_base_dir():
   import pathlib
   for p in pathlib.Path(__file__).parents:
-    if os.path.basename(p) == "NXP-UTIL": return p
+    if os.path.basename(p) == 'NXP-UTIL': return p
   raise Exception("[-] Can't find base repository directory (Looking for NXP-UTIL).")
 
 def get_config():
   import yaml
-  with open(os.path.join(get_base_dir(), "config/config.yaml"), "r") as f:
+  with open(os.path.join(get_base_dir(), 'config/config.yaml'), 'r') as f:
     return yaml.safe_load(f)
 
 # Threads to keep GUI running smoothly
@@ -44,13 +42,13 @@ def threadexec(func):
 
 class Gui(tk.Tk):
   _TITLE = 'LINESCAN DATA VISUALIZATION'
-  # Gui dims
+  # Gui dims in px
   _WIDTH = 700
   _HEIGHT = 500
   _COLORS = {'white': '#fafafa',
             'black': '#0f0f0f',
             'grey': '#707070',
-            'light blue': '#d8e6f2'
+            'light blue': '#e6f7f7'
   }
   # Top-left icon
   _ICON = os.path.join(get_base_dir(), 'assets/icon.ico')
@@ -59,8 +57,7 @@ class Gui(tk.Tk):
     print('[*] MAKE SURE SERVER IS RUNNING FIRST [*]')
     super().__init__()
     self.title(self._TITLE)
-    self.iconbitmap(self._ICON)
-    # Initialize fonts after tk itself has been initialized
+    self.iconbitmap(self._ICON)     # REMOVE LINE IF RUNNING /BUILDING ON LINUX
     self._FONT = tkFont.Font(family='Cascadia Code', size=13, weight='bold')
     self._FONTSMALL = tkFont.Font(family='Cascadia Code', size=10, weight='bold')
     self.draw_gui()
@@ -114,16 +111,18 @@ class Gui(tk.Tk):
                  'SPEED': 0
     }
     self.isrunning = False
+    print('[*] Initializing client. Looking for running server...')
     self.client = client.Client()
+    if self.client is None: raise Exception('[-] Client is <None>. Server not found.')
 
   # Update Gui steer / speed VALUE labels
   @threadexec
   def tUpdatelbs(self):
     while 1:
       if not self.isrunning: return
-      self.steervallb['text'] = f'[ {str(random.randint(0, 10))}.0 ]'
-      print("[ Thread ] tUpdatelbs()")
-      time.sleep(0.5)
+      # fetch and display new values
+      #self.steervallb['text'] = 
+      print('[ Thread ] tUpdatelbs()')
 
   # Read / store incoming data
   @threadexec
@@ -131,13 +130,10 @@ class Gui(tk.Tk):
     while 1:
       if not self.isrunning: return
       self.DATA['LINE'] = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-PER-LINE']))
-      if len(self.DATA['LINE']) != 128: raise Exception(f"ERROR DATA NOT 128 BYTES: {len(self.DATA['LINE'])}")
-      #print("[ DEBUG ] DATA:\n{self.DATA['LINE']}")
-      # TODO: Implement:
-      #self.Data['STEER'] = 
-      #self.Data['SPEED'] = 
-      #print("[ Thread ] tReaddat()")
-      #time.sleep(1)
+      assert(len(self.DATA['LINE']) == 128)
+      # TODO: Implement
+      #self.Data['STEER'] =
+      #self.Data['SPEED'] =
 
   # Graphing
   @threadexec
@@ -150,11 +146,8 @@ class Gui(tk.Tk):
     # clear previous graph
     self.ax.clear()
     datx, daty = processing.prep_graph_dat(self.DATA['LINE'])
-    print(f'DATX:\n{datx}')
-    print(f'DATY:\n{daty}')
     # plot new
-    for gx, gy in zip(datx, daty):
-      self.ax.plot(gx, gy, color='black', linewidth=8)
+    for gx, gy in zip(datx, daty): self.ax.plot(gx, gy, color='black', linewidth=8)
 
   # Start-Stop button functionality
   def but_func(self):
@@ -174,17 +167,17 @@ class Gui(tk.Tk):
   def but_hover_leave(self, button, color=_COLORS['white']): button.configure(bg=color)
 
   def exit(self):
-    print("[-] Exiting...")
+    print('[-] Exiting...')
     self.quit()
     self.destroy()
 
 # spawn Gui instance
 def spawn_gui():
+  print('[*] Spawning GUI Instance')
   g = Gui()
   g.resizable(False, False)
   g.protocol('WM_DELETE_WINDOW', g.exit)
   g.mainloop()
 
 if __name__ == '__main__':
-  print('[*] Spawning GUI Instance')
   spawn_gui()
