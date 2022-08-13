@@ -58,4 +58,7 @@ def main():
     print(f'[-] Error: {e}')
 
 if __name__ == '__main__':
-  main()
+  try:
+    while 1: main()
+  except KeyboardInterrupt:
+    print('\n[-] Closing server & exiting...')
