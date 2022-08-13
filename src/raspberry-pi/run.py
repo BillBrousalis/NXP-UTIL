@@ -43,7 +43,7 @@ def main():
       # Pass buf to client(s)
       s.send(buf)
       if config['COMMANDS']:
-        u.send(b'\x20\x30')
+        u.send(b'\x20\x00')
       '''
       if config['LOGGING'] == 'RPI':
         #TODO: deal with logging on rpi
