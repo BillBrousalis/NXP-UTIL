@@ -15,7 +15,12 @@ class Client():
   def _setup(self):
     import socket
     self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    self.sock.connect((self.HOST, self.PORT))
+    print('[*] Attempting to connect to server...')
+    try:
+      self.sock.connect((self.HOST, self.PORT))
+    except ConnectionRefusedError as e:
+      self.sock = None
+      print(f'[-] ConnectionRefusedError:\n{e}')
     print("[*] Connection Successfull")
 
   @check
