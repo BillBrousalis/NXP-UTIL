@@ -113,6 +113,10 @@ class Gui(tk.Tk):
     self.isrunning = False
     print('[*] Initializing client. Looking for running server...')
     self.client = client.Client()
+    if self.client.sock is None: 
+      while 1:
+        self.client = client.Client()
+        if self.client.sock is not None: break
     if self.client is None: raise Exception('[-] Client is <None>. Server not found.')
 
   # Update Gui steer / speed VALUE labels
