@@ -4,7 +4,7 @@ DEBUG: true
 LOGGING: null
 LOGGING-PATH-CLIENT: logs/client_logs.csv
 LOGGING-PATH-RPI: logs/rpi_logs.csv
-MAX-DEV: 1
+MAX-DEV: 0
 RPI-IP: 192.168.1.15
 RPI-PORT: 9001
 UART-BAUD: 115200
