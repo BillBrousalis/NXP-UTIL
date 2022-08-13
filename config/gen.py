@@ -5,7 +5,7 @@ def generate_config():
                  "MAX-DEV": 1,
                  "RPI-IP": "192.168.1.15",
                  "RPI-PORT": 9001,
-                 "BYTES-PER-LINE": 128,
+                 "BYTES-PER-LINE": 130,
                  "COMMANDS": False,  # / True
                  "UART-BAUD": 115200,
                  "DEBUG": True,
