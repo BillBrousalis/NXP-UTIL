@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 def generate_config():
-  config_dict = {"MAX-DEV": 1,
-                 "RPI-IP": "192.168.1.10",
+                 
+  config_dict = {"VERSION": 0.2,
+                 "MAX-DEV": 1,
+                 "RPI-IP": "192.168.1.15",
                  "RPI-PORT": 9001,
                  "BYTES-PER-LINE": 128,
-                 "LOGGING-PATH-RPI": "logs/rpi_logs.csv",
-                 "LOGGING-PATH-CLIENT": "logs/client_logs.csv",
-                 "LOGGING": None,   # "PI" / "CLIENT"
                  "COMMANDS": False,  # / True
-                 "VERSION": 0.1,
-                 "UART-BAUD": 115200
+                 "UART-BAUD": 115200,
+                 "DEBUG": True,
+                 "LOGGING": None,   # "PI" / "CLIENT"
+                 "LOGGING-PATH-RPI": "logs/rpi_logs.csv",
+                 "LOGGING-PATH-CLIENT": "logs/client_logs.csv"
   }
   fname = "config.yaml"
 

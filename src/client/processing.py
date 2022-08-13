@@ -1,24 +1,27 @@
 #!/usr/bin/env python3
-
-def decode(dat):
+THRESHOLD = 120
+def decode(dat, DEBUG=False):
   # decode when 16 bytes are being send instead of 128
   # TODO: implement 16-byte into 128 bit dec
-  #return list([int(x) for x in dat.decode()])
-  return [1 if b > 127 else 0 for b in dat]
+  if DEBUG: 
+    print(f'DATA:\n{[x for x in dat]}')
+    return [int(x) for x in dat]
+  return [1 if b > THRESHOLD else 0 for b in dat]
 
 # prep data into multi-part graph
-# TODO: there has to be a better way to write this
 def prep_graph_dat(dat):
-  colors = {'white': 1, 'black': 0}
-  draw = colors['white']
-  y, x = [], []
-  tmpy, tmpx = [], []
+  # 1 to draw white parts of road
+  # 0 to draw black parts
+  draw = 1
+  x, y = [], []
+  tmpx, tmpy = [], []
   prev = None
+  # Break into sections; Can't draw disconnected graph
   for idx, val in enumerate(dat):
     if val != draw or idx == len(dat)-1:
       if prev == draw:
-        if len(tmpy): y.append(tmpy)
         if len(tmpx): x.append(tmpx)
+        if len(tmpy): y.append(tmpy)
       tmpy, tmpx = [], []
       continue
     tmpy.append(val)
