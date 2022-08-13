@@ -6,7 +6,7 @@ def generate_config():
                  "RPI-IP": "192.168.1.15",
                  "RPI-PORT": 9001,
                  "BYTES-PER-LINE": 130,
-                 "COMMANDS": False,  # / True
+                 "COMMANDS": True,  # / True
                  "UART-BAUD": 115200,
                  "DEBUG": True,
                  "LOGGING": None,   # "PI" / "CLIENT"

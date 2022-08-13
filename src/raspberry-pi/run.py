@@ -42,10 +42,9 @@ def main():
       if config['DEBUG']: print(f'[ DEBUG ] UART Received:\n{buf}')
       # Pass buf to client(s)
       s.send(buf)
-      '''
       if config['COMMANDS']:
-        #TODO: deal with commands
-        pass
+        u.send(b'\x20\x30')
+      '''
       if config['LOGGING'] == 'RPI':
         #TODO: deal with logging on rpi
         pass
