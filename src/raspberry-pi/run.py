@@ -46,7 +46,6 @@ def main():
   s = server.Server(port=config["RPI-PORT"], max_dev=max_dev)
   u = uart.Uart(baud=config['UART-BAUD'])
   buf = None
-  exit()
   try:
     while 1: # mainloop
       if max_dev != 0:
