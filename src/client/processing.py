@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
 THRESHOLD = 120
+# uart buffer is uint8_t type
+# convert speed / steer to signed
+def uint2int(n):
+  if n < 0x7f: return n
+  else: return (-(~n&0xff))
+
 def decode(dat, DEBUG=False):
   # decode when 16 bytes are being send instead of 128
   # TODO: implement 16-byte into 128 bit dec
   if DEBUG: 
     print(f'DATA:\n{[x for x in dat]}')
-    return (list(dat[:128]), dat[128], dat[129])
-  return ([1 if b > THRESHOLD else 0 for b in dat[:128]], dat[128], dat[129])
+    return (list(dat[:128]), uint2int(dat[128]), uint2int(dat[129]))
+  return ([1 if b > THRESHOLD else 0 for b in dat[:128]], uint2int(dat[128]), uint2int(dat[129]))
 
 # prep data into multi-part graph
 def prep_graph_dat(dat):
