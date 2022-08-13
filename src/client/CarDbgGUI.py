@@ -129,7 +129,7 @@ class Gui(tk.Tk):
   def tReaddat(self):
     while 1:
       if not self.isrunning: return
-      self.DATA['LINE'] = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-PER-LINE']))
+      self.DATA['LINE'] = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-PER-LINE']), DEBUG=self._CONFIG['DEBUG'])
       assert(len(self.DATA['LINE']) == 128)
       # TODO: Implement
       #self.Data['STEER'] =
@@ -145,9 +145,13 @@ class Gui(tk.Tk):
     if not self.isrunning: self.anim.event_source.stop()
     # clear previous graph
     self.ax.clear()
-    datx, daty = processing.prep_graph_dat(self.DATA['LINE'])
-    # plot new
-    for gx, gy in zip(datx, daty): self.ax.plot(gx, gy, color='black', linewidth=8)
+    if self._CONFIG['DEBUG']:
+      # plot raw data
+      self.ax.plot([i for i in range(128)], self.DATA['LINE'], color='blue', linewidth=3)
+    else:
+      datx, daty = processing.prep_graph_dat(self.DATA['LINE'])
+      # plot new
+      for gx, gy in zip(datx, daty): self.ax.plot(gx, gy, color='black', linewidth=8)
 
   # Start-Stop button functionality
   def but_func(self):

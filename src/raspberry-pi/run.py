@@ -39,8 +39,8 @@ def main():
   try:
     while 1: # mainloop
       buf = u.recv(config['BYTES-PER-LINE'])
-      print(f'[ DEBUG ] UART Received:\n{buf}')
-      # Pass buf to clients
+      if config['DEBUG']: print(f'[ DEBUG ] UART Received:\n{buf}')
+      # Pass buf to client(s)
       s.send(buf)
       '''
       if config['COMMANDS']:
