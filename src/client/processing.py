@@ -5,8 +5,8 @@ def decode(dat, DEBUG=False):
   # TODO: implement 16-byte into 128 bit dec
   if DEBUG: 
     print(f'DATA:\n{[x for x in dat]}')
-    return [int(x) for x in dat]
-  return [1 if b > THRESHOLD else 0 for b in dat]
+    return (list(dat[:128]), dat[128], dat[129])
+  return ([1 if b > THRESHOLD else 0 for b in dat[:128]], dat[128], dat[129])
 
 # prep data into multi-part graph
 def prep_graph_dat(dat):

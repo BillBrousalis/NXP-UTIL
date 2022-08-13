@@ -7,6 +7,7 @@
 # Description : Graphical User Interface For LineScan Camera Data Visualization
 #==============================================================================
 import os
+import time
 import threading
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -125,7 +126,8 @@ class Gui(tk.Tk):
     while 1:
       if not self.isrunning: return
       # fetch and display new values
-      #self.steervallb['text'] = 
+      self.steervallb['text'] = f"[ {self.DATA['STEER']} ]"
+      self.speedvallb['text'] = f"[ {self.DATA['SPEED']} ]"
       print('[ Thread ] tUpdatelbs()')
 
   # Read / store incoming data
@@ -133,8 +135,8 @@ class Gui(tk.Tk):
   def tReaddat(self):
     while 1:
       if not self.isrunning: return
-      self.DATA['LINE'] = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-PER-LINE']), DEBUG=self._CONFIG['DEBUG'])
-      assert(len(self.DATA['LINE']) == 128)
+      self.DATA = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-PER-LINE']), DEBUG=self._CONFIG['DEBUG'])
+      print(self.DATA)
       # TODO: Implement
       #self.Data['STEER'] =
       #self.Data['SPEED'] =

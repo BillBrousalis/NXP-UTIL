@@ -1,6 +1,6 @@
-BYTES-PER-LINE: 128
+BYTES-PER-LINE: 130
 COMMANDS: false
-DEBUG: False
+DEBUG: true
 LOGGING: null
 LOGGING-PATH-CLIENT: logs/client_logs.csv
 LOGGING-PATH-RPI: logs/rpi_logs.csv
