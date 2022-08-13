@@ -128,18 +128,14 @@ class Gui(tk.Tk):
       # fetch and display new values
       self.steervallb['text'] = f"[ {self.DATA['STEER']} ]"
       self.speedvallb['text'] = f"[ {self.DATA['SPEED']} ]"
-      print('[ Thread ] tUpdatelbs()')
+      time.sleep(0.1)
 
   # Read / store incoming data
   @threadexec
   def tReaddat(self):
     while 1:
       if not self.isrunning: return
-      self.DATA = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-PER-LINE']), DEBUG=self._CONFIG['DEBUG'])
-      print(self.DATA)
-      # TODO: Implement
-      #self.Data['STEER'] =
-      #self.Data['SPEED'] =
+      self.DATA['LINE'], self.DATA['SPEED'], self.DATA['STEER'] = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-PER-LINE']), DEBUG=self._CONFIG['DEBUG'])
 
   # Graphing
   @threadexec
@@ -167,7 +163,7 @@ class Gui(tk.Tk):
     else:
       self.isrunning = True
       # Start threads
-      #self.tUpdatelbs()
+      self.tUpdatelbs()
       self.tReaddat()
       self.tAnim()
       self.but['text'] = 'STOP'
