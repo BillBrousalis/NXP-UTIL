@@ -1,5 +1,5 @@
 BYTES-PER-LINE: 130
-COMMANDS: true
+COMMANDS: false
 DEBUG: true
 LOGGING: null
 LOGGING-PATH-CLIENT: logs/client_logs.csv
