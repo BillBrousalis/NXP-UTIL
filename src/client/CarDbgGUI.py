@@ -26,7 +26,7 @@ def get_base_dir():
     if os.path.basename(p) == 'NXP-UTIL': return p
   raise Exception("[-] Can't find base repository directory (Looking for NXP-UTIL).")
 
-def get_config():
+def get_config()->dict:
   import yaml
   with open(os.path.join(get_base_dir(), 'config/config.yaml'), 'r') as f:
     return yaml.safe_load(f)

@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 def generate_config():
-                 
   config_dict = {"VERSION": 0.2,
-                 "MAX-DEV": 1,
+                 "DEV": 1,
                  "RPI-IP": "192.168.1.72",
                  "RPI-PORT": 9001,
-                 "BYTES-PER-LINE": 130,
+                 "BYTES-TO-READ": 130,
                  "COMMANDS": True,  # / True
                  "UART": "/dev/ttyS0",
                  "UART-BAUD": 115200,
@@ -15,7 +14,6 @@ def generate_config():
                  "LOGGING-PATH-CLIENT": "logs/client_logs.csv"
   }
   fname = "config.yaml"
-
   with open(fname, "w") as f:
     import yaml
     yaml.dump(config_dict, f)

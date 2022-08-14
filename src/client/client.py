@@ -6,7 +6,7 @@ def check(func):
   return wrapper
 
 class Client():
-  def __init__(self, host='192.168.1.10', port=9001):
+  def __init__(self, host: str, port: int):
     print('[*] Starting Client...')
     print(f'[*] IP: {host} | PORT: {port}')
     self.HOST, self.PORT = host, port
@@ -29,7 +29,7 @@ class Client():
     self.sock.close()
 
   @check
-  def readbytes(self, n=1):
+  def readbytes(self, n: int):
     return self.sock.recv(n)
 
   @check

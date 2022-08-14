@@ -5,7 +5,7 @@ def uint2int(n):
   if n < 0x7f: return n
   else: return (-(~n&0xff))
 
-def decode(dat, DEBUG=False, THRESHOLD=120):
+def decode(dat, DEBUG: bool, THRESHOLD=120):
   # decode when 16 bytes are being send instead of 128
   # TODO: implement 16-byte into 128 bit dec
   if DEBUG: 
@@ -14,7 +14,7 @@ def decode(dat, DEBUG=False, THRESHOLD=120):
   return ([1 if b > THRESHOLD else 0 for b in dat[:128]], uint2int(dat[128]), uint2int(dat[129]))
 
 # prep data into multi-part graph
-def prep_graph_dat(dat):
+def prep_graph_dat(dat: list):
   # 1 to draw white parts of road
   # 0 to draw black parts
   draw = 1
