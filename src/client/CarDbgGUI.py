@@ -58,7 +58,7 @@ class Gui(tk.Tk):
     print('[*] MAKE SURE SERVER IS RUNNING FIRST [*]')
     super().__init__()
     self.title(self._TITLE)
-    self.iconbitmap(self._ICON)     # REMOVE LINE IF RUNNING /BUILDING ON LINUX
+    self.iconbitmap(self._ICON)     # REMOVE LINE IF RUNNING / BUILDING ON LINUX
     self._FONT = tkFont.Font(family='Cascadia Code', size=13, weight='bold')
     self._FONTSMALL = tkFont.Font(family='Cascadia Code', size=10, weight='bold')
     self.draw_gui()
@@ -77,7 +77,7 @@ class Gui(tk.Tk):
     steerlb = tk.Label(self.canvas, text='Steering Angle:', font=self._FONT, bg=self._COLORS['white'])
     steerlb.place(anchor='n', relx=0.8, rely=0.09, relwidth=0.225, relheight=0.05)
     # Steering value displayed
-    self.steervallb = tk.Label(self.canvas, text='[ 0.0 ]', font=self._FONT, bg=self._COLORS['white'])
+    self.steervallb = tk.Label(self.canvas, text='[ 0 ]', font=self._FONT, bg=self._COLORS['white'])
     self.steervallb.place(anchor='n', relx=0.85, rely=0.14, relwidth=0.225, relheight=0.05)
     # Horizontal separator
     hsep = ttk.Separator(self.canvas, orient='horizontal')
@@ -86,7 +86,7 @@ class Gui(tk.Tk):
     speedlb = tk.Label(self.canvas, text='Speed:', font=self._FONT, bg=self._COLORS['white'])
     speedlb.place(anchor='n', relx=0.738, rely=0.24, relwidth=0.1, relheight=0.05)
     # Speed value displayed
-    self.speedvallb = tk.Label(self.canvas, text='[ 0.0 ]', font=self._FONT, bg=self._COLORS['white'])
+    self.speedvallb = tk.Label(self.canvas, text='[ 0 ]', font=self._FONT, bg=self._COLORS['white'])
     self.speedvallb.place(anchor='n', relx=0.85, rely=0.29, relwidth=0.225, relheight=0.05)
     # Start-Stop button
     self.but = tk.Button(self.canvas, text='START', font=self._FONT, bg=self._COLORS['white'], relief='groove', command=self.but_func)

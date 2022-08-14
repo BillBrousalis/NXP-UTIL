@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
-THRESHOLD = 120
 # uart buffer is uint8_t type
 # convert speed / steer to signed
 def uint2int(n):
   if n < 0x7f: return n
   else: return (-(~n&0xff))
 
-def decode(dat, DEBUG=False):
+def decode(dat, DEBUG=False, THRESHOLD=120):
   # decode when 16 bytes are being send instead of 128
   # TODO: implement 16-byte into 128 bit dec
   if DEBUG: 

@@ -6,7 +6,7 @@ def check(func):
   return wrapper
 
 class Client():
-  def __init__(self, host="192.168.1.15", port=9001):
+  def __init__(self, host="192.168.1.72", port=9001):
     print("[*] Starting Client...")
     self.HOST, self.PORT = host, port
     self.sock = None
