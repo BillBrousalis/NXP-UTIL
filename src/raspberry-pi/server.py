@@ -6,10 +6,10 @@ def check(func):
   return wrapper
 
 class Server():
-  def __init__(self, host: str, port: int, dev: int):
+  def __init__(self, port: int, dev: int):
     print("[*] Starting Server...")
     self.DEV = dev
-    self.HOST, self.PORT = host, port
+    self.HOST, self.PORT = '', port
     self.sock = None
     self.clients = []
     self._setup()
