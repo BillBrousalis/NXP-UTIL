@@ -116,7 +116,7 @@ class Gui(tk.Tk):
     self.client = client.Client(host=self._CONFIG['RPI-IP'], port=self._CONFIG['RPI-PORT'])
     if self.client.sock is None: 
       while 1:
-        self.client = client.Client()
+        self.client = client.Client(host=self._CONFIG['RPI-IP'], port=self._CONFIG['RPI-PORT'])
         if self.client.sock is not None: break
     if self.client is None: raise Exception('[-] Client is <None>. Server not found.')
 
@@ -135,7 +135,7 @@ class Gui(tk.Tk):
   def tReaddat(self):
     while 1:
       if not self.isrunning: return
-      self.DATA['LINE'], self.DATA['SPEED'], self.DATA['STEER'] = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-PER-LINE']), DEBUG=self._CONFIG['DEBUG'])
+      self.DATA['LINE'], self.DATA['SPEED'], self.DATA['STEER'] = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-TO-READ']), DEBUG=self._CONFIG['DEBUG'])
 
   # Graphing
   @threadexec
