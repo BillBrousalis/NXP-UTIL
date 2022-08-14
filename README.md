@@ -17,13 +17,17 @@ pip install -r requirements.txt
 
 Set up your configuration by editing `config/config.yaml`.
 
-Raspberry-PI:
+**Raspberry-PI:**
 
 ```
-./rpi-run --dev=<NUMBER OF CLIENTS>
+./rpi-run
+```
+or for setting the config on-the-fly, see options with
+```
+./rpi-run -h
 ```
 
-Client(s):
+**Client(s):**
 
 ```
 .\CarDbgGUI.exe
@@ -50,7 +54,7 @@ over to your machine for viewing and proccessing, all in `real-time`.
 If modifications are needed, you can rebuild your `.exe` / `binary` executable:
 
 ```
-<Insert pyinstaller command for building>
+[TODO]: Insert pyinstaller command for building
 ```
 
 ## The Raspberry-PI
@@ -72,9 +76,11 @@ Steering angle and Vehicle speed available for viewing.
 
 ## COMMANDS mode [ Optional ]:
 
-[TODO]: Car can accept commands through WIFI-->PI-->UART to access underlying API.
+Car can be controlled using the Raspberry-PI by setting speed and steering.
 
-Useful for testing algorithms in python3 instead of writing massive amounts of C code.
+Develop your algorithm in `Python3` before writting large amounts of C code.
+
+Not as fast, but useful nontheless.
 
 ## LOGGING mode [ Optional ]:
 
