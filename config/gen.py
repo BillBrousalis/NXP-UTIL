@@ -3,10 +3,11 @@ def generate_config():
                  
   config_dict = {"VERSION": 0.2,
                  "MAX-DEV": 1,
-                 "RPI-IP": "192.168.1.15",
+                 "RPI-IP": "192.168.1.72",
                  "RPI-PORT": 9001,
                  "BYTES-PER-LINE": 130,
                  "COMMANDS": True,  # / True
+                 "UART": "/dev/ttyS0",
                  "UART-BAUD": 115200,
                  "DEBUG": True,
                  "LOGGING": None,   # "PI" / "CLIENT"

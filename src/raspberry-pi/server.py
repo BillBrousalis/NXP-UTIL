@@ -6,7 +6,7 @@ def check(func):
   return wrapper
 
 class Server():
-  def __init__(self, host='', port=9001, max_dev=1):
+  def __init__(self, host='192.168.1.10', port=9001, max_dev=1):
     print("[*] Starting Server...")
     self.MAX_DEV = max_dev
     self.HOST, self.PORT = host, port

@@ -44,7 +44,7 @@ def main():
   print(f'[*] COMMANDS mode: {"**ON**" if commands else "**OFF**"}')
   print(f'[*] Expecting [ {max_dev} ] Client(s)')
   s = server.Server(port=config["RPI-PORT"], max_dev=max_dev)
-  u = uart.Uart(baud=config['UART-BAUD'])
+  u = uart.Uart(dev=config['UART'], baud=config['UART-BAUD'])
   buf = None
   try:
     while 1: # mainloop
@@ -53,7 +53,8 @@ def main():
         if config['DEBUG']: print(f'[ DEBUG ] UART Received:\n{buf}')
         # Pass buf to client(s)
         s.send(buf)
-      else: # COMMANDS unavailable while also having clients present TODO: have separate uart conn for data sending
+      else: # COMMANDS unavailable while also having clients present 
+        #TODO: have separate uart conn for data sending - not usable atm
         if commands:
           # Test
           testspeed += 0.0005
