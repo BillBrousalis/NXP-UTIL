@@ -6,8 +6,9 @@ def check(func):
   return wrapper
 
 class Client():
-  def __init__(self, host="192.168.1.72", port=9001):
-    print("[*] Starting Client...")
+  def __init__(self, host='192.168.1.10', port=9001):
+    print('[*] Starting Client...')
+    print(f'[*] IP: {host} | PORT: {port}')
     self.HOST, self.PORT = host, port
     self.sock = None
     self._setup()
@@ -21,7 +22,7 @@ class Client():
     except ConnectionRefusedError as e:
       self.sock = None
       print(f'[-] ConnectionRefusedError:\n{e}')
-    print("[*] Connection Successfull")
+    print('[*] Connection Successfull')
 
   @check
   def close(self):
@@ -37,7 +38,7 @@ class Client():
     self.sock.send(dat)
 
   def test(self):
-    self.send("Hello World")
+    self.send('Hello World')
     self.close()
 
 if __name__ == '__main__':

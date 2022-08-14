@@ -113,7 +113,7 @@ class Gui(tk.Tk):
     }
     self.isrunning = False
     print('[*] Initializing client. Looking for running server...')
-    self.client = client.Client()
+    self.client = client.Client(host=self._CONFIG['RPI-IP'], port=self._CONFIG['RPI-PORT'])
     if self.client.sock is None: 
       while 1:
         self.client = client.Client()
