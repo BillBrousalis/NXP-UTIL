@@ -80,7 +80,9 @@ The car can be controlled using the Raspberry-PI by setting speed and steering -
 
 Develop your algorithm in `Python3` before writting large amounts of C code.
 
-Not as fast, but useful nontheless.
+Runs `server-side` for speed.
+
+Not super fast, but useful nontheless.
 
 **Recommended (if not debugging):** 0 Clients
 
