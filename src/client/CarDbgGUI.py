@@ -22,7 +22,7 @@ import processing
 # Get base dir of repo
 def get_base_dir():
   import pathlib
-  for p in pathlib.Path(__file__).parents:
+  for p in pathlib.Path(os.path.abspath(__file__)).parents:
     if os.path.basename(p) == 'NXP-UTIL': return p
   raise Exception("[-] Can't find base repository directory (Looking for NXP-UTIL).")
 
