@@ -1,10 +1,6 @@
 BYTES-TO-READ: 130
 COMMANDS: false
-<<<<<<< HEAD
 DEBUG: false
-=======
-DEBUG: true
->>>>>>> f4f94e052468eb5d2a298b131dd2ffaf3f7ce798
 DEV: 1
 LOGGING: null
 LOGGING-PATH-CLIENT: logs/client_logs.csv
