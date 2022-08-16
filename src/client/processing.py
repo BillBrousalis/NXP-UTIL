@@ -34,3 +34,14 @@ def prep_graph_dat(dat: list):
     prev = val
   # x, y -> list of lists: plot each sublist ex. (x[0], y[0])
   return (x, y)
+
+if __name__ == '__main__':
+  print('[ Running prep_graph_data Test ]')
+  x = [0 for _ in range(30)] +\
+      [1 for _ in range(30)] +\
+      [0 for _ in range(40)] +\
+      [1 for _ in range(18)]
+  print(f'Input:\n{x}')
+  print(f'Out:\n{prep_graph_dat(x)}')
+elif __name__ == 'processing':
+  print('[+] PROCESSING module added') 

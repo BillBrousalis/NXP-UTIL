@@ -39,3 +39,5 @@ if __name__ == "__main__":
   #--testing
   u = Uart()
   u.test()
+elif __name__ == 'uart':
+  print('[+] UART module added')

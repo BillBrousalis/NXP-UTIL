@@ -54,3 +54,5 @@ if __name__ == "__main__":
   #--testing
   s = Server()
   s.test()
+elif __name__ == 'server':
+  print('[+] SERVER module added')

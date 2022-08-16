@@ -62,4 +62,5 @@ def main():
     print(f'[-] Error: {e}')
 
 if __name__ == '__main__':
+    print('[ Running RPI Loop ]')
     while 1: main()
