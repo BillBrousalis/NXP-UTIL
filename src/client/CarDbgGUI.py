@@ -26,6 +26,7 @@ def get_base_dir():
     if os.path.basename(p) == 'NXP-UTIL': return p
   raise Exception("[-] Can't find base repository directory (Looking for NXP-UTIL).")
 
+# Fetch config dict
 def get_config()->dict:
   import yaml
   with open(os.path.join(get_base_dir(), 'config/config.yaml'), 'r') as f:
@@ -54,6 +55,7 @@ class Gui(tk.Tk):
   # Top-left icon
   _ICON = os.path.join(get_base_dir(), 'assets/icon.ico')
   _CONFIG = get_config()
+
   def __init__(self):
     print('[*] MAKE SURE SERVER IS RUNNING FIRST [*]')
     super().__init__()
@@ -62,7 +64,7 @@ class Gui(tk.Tk):
     self._FONT = tkFont.Font(family='Cascadia Code', size=13, weight='bold')
     self._FONTSMALL = tkFont.Font(family='Cascadia Code', size=10, weight='bold')
     self.draw_gui()
-    # Data-specific
+    # Data/Connection-specific
     self.setup()
   
   def draw_gui(self):
@@ -107,6 +109,7 @@ class Gui(tk.Tk):
     self.ax.set_title('--LineScan Readings--')
   
   def setup(self):
+    # Store incoming data
     self.DATA = {'LINE': [],
                  'STEER': 0,
                  'SPEED': 0
@@ -116,9 +119,9 @@ class Gui(tk.Tk):
     self.client = client.Client(host=self._CONFIG['RPI-IP'], port=self._CONFIG['RPI-PORT'])
     if self.client.sock is None: 
       while 1:
+        print('[-] Connection not made. Trying again...')
         self.client = client.Client(host=self._CONFIG['RPI-IP'], port=self._CONFIG['RPI-PORT'])
         if self.client.sock is not None: break
-    if self.client is None: raise Exception('[-] Client is <None>. Server not found.')
 
   # Update Gui steer / speed VALUE labels
   @threadexec
@@ -173,7 +176,7 @@ class Gui(tk.Tk):
   def but_hover_leave(self, button, color=_COLORS['white']): button.configure(bg=color)
 
   def exit(self):
-    print('[-] Exiting...')
+    print('[*] Exiting...')
     self.quit()
     self.destroy()
 

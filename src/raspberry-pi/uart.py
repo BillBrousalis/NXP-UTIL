@@ -36,7 +36,7 @@ class Uart():
     self.close()
 
 if __name__ == "__main__":
-  #--testing
+  print('[ Running Uart Test ]')
   u = Uart()
   u.test()
 elif __name__ == 'uart':
