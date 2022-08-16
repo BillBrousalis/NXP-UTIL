@@ -23,6 +23,10 @@ class Client():
       self.sock = None
       print(f'[-] ConnectionRefusedError:\n{e}')
     print('[*] Connection Successfull')
+  
+  @property
+  def get_sock(self):
+    return self.sock
 
   @check
   def close(self):
