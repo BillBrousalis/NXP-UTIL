@@ -39,6 +39,7 @@ class Server():
   
   @check
   def close(self):
+    print('[-] Closing Server')
     self.sock.close()
 
   @check
@@ -52,7 +53,8 @@ class Server():
 
 if __name__ == "__main__":
   print('[ Running Server test ]')
-  s = Server()
+  s = Server(9001, 0)
+  print(s)
   s.test()
 elif __name__ == 'server':
   print('[+] SERVER module added')
