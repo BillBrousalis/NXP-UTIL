@@ -54,7 +54,7 @@ over to your machine for viewing and proccessing, all in `real-time`.
 If modifications are needed, you can rebuild your `.exe` / `binary` executable:
 
 ```
-[TODO]: Insert pyinstaller command for building
+pyinstaller --onefile --nowindowed --icon="assets/rpi.ico" --distpath="bin/" --name="CarDbgGUI.exe" src/client/CarDbgGUI.py
 ```
 
 ## **The Raspberry-PI**
