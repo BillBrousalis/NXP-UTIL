@@ -13,7 +13,7 @@ prev = 0
 # speed / steer range (-100, 100) so it fits
 def prep(x: int)->bytes: return (x if x > 0 else x+255).to_bytes(1, 'little')
 
-# develop custom algorithm here
+# ** Develop custom algorithm here **
 def custom(dat: list, dbg: bool)->int:
   err = processdata(dat)
   steering_angle = pid(err)
@@ -21,7 +21,7 @@ def custom(dat: list, dbg: bool)->int:
   if dbg: printdbg(err, steering_angle)
   return prep(round(steering_angle))
 
-# process linescan data
+# ** Process linescan data **
 def processdata(dat: list)->float:
   return 0
 
@@ -31,7 +31,7 @@ def printdbg(err, steer):
         f'[*] STEERING ANGLE: {steer}\n')
 
 if __name__ == '__main__':
-  print('[ Running dummy set ]')
+  print('[ Running algorithm dummy set ]')
   dummydat = [0 for _ in range(128)]
   custom(dummydat)
 elif __name__ == 'algo':

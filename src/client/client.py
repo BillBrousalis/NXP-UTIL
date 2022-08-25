@@ -13,6 +13,14 @@ class Client():
     self.sock = None
     self._setup()
 
+  @property
+  def sock(self):
+    return self._sock
+
+  @sock.setter
+  def sock(self, s):
+    self._sock = s
+
   def _setup(self):
     import socket
     self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -24,10 +32,6 @@ class Client():
       print(f'[-] ConnectionRefusedError:\n{e}')
     print('[*] Connection Successfull')
   
-  @property
-  def get_sock(self):
-    return self.sock
-
   @check
   def close(self):
     self.sock.close()
@@ -46,5 +50,8 @@ class Client():
     self.close()
 
 if __name__ == '__main__':
-  c = Client()
+  print('[ Running Client Test ]')
+  c = Client('192.168.1.83', 9001)
   c.test()
+elif __name__ == 'client':
+  print('[+] CLIENT module imported')

@@ -51,6 +51,8 @@ class Server():
     self.close()
 
 if __name__ == "__main__":
-  #--testing
+  print('[ Running Server test ]')
   s = Server()
   s.test()
+elif __name__ == 'server':
+  print('[+] SERVER module added')
