@@ -5,7 +5,7 @@
 # Version     : 0.1
 # Year        : 2022
 # Description : Graphical User Interface For LineScan Camera Data Visualization
-#==============================================================================
+#========================)======================================================
 import os
 import time
 import random
@@ -16,7 +16,7 @@ import tkinter.font as tkFont
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-##### MODULES #####
+# MODULES
 import client
 import processing
 
@@ -53,7 +53,7 @@ class Gui(tk.Tk):
             'light blue': '#d8e6f2'
   }
   # Top-left icon
-  _ICON = os.path.join(get_base_dir(), 'assets/icon.ico')
+  _ICON = os.path.join(get_base_dir(), 'assets/rpi.ico')
   _CONFIG = get_config()
   def __init__(self):
     print('[*] MAKE SURE SERVER IS RUNNING FIRST [*]')
@@ -132,7 +132,7 @@ class Gui(tk.Tk):
       if not self.isrunning: return
       self.DATA['LINE'] = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-PER-LINE']))
       if len(self.DATA['LINE']) != 128: raise Exception(f"ERROR DATA NOT 128 BYTES: {len(self.DATA['LINE'])}")
-      #print("[ DEBUG ] DATA:\n{self.DATA['LINE']}")
+      print(f"[ DEBUG ] DATA:\n{self.DATA['LINE']}")
       # TODO: Implement:
       #self.Data['STEER'] = 
       #self.Data['SPEED'] = 
@@ -149,12 +149,13 @@ class Gui(tk.Tk):
     if not self.isrunning: self.anim.event_source.stop()
     # clear previous graph
     self.ax.clear()
-    datx, daty = processing.prep_graph_dat(self.DATA['LINE'])
-    print(f'DATX:\n{datx}')
-    print(f'DATY:\n{daty}')
+    #datx, daty = processing.prep_graph_dat(self.DATA['LINE'])
+    #print(f'DATX:\n{datx}')
+    #print(f'DATY:\n{daty}')
     # plot new
-    for gx, gy in zip(datx, daty):
-      self.ax.plot(gx, gy, color='black', linewidth=8)
+    #for gx, gy in zip(datx, daty):
+    #  self.ax.plot(gx, gy, color='black', linewidth=8)
+    self.ax.plot([i for i in range(128)], self.DATA['LINE'], color='green', linewidth=3)
 
   # Start-Stop button functionality
   def but_func(self):

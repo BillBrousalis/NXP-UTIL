@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
+THRESHOLD = 115
 
 def decode(dat):
   # decode when 16 bytes are being send instead of 128
   # TODO: implement 16-byte into 128 bit dec
-  #return list([int(x) for x in dat.decode()])
-  return [1 if b > 127 else 0 for b in dat]
+  print('>>>', [x for x in dat])
+  #return [1 if b > THRESHOLD else 0 for b in dat] #[int(x) for x in dat]]
+  return [x for x in dat]
 
 # prep data into multi-part graph
 # TODO: there has to be a better way to write this
