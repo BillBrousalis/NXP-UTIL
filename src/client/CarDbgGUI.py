@@ -26,7 +26,6 @@ def get_base_dir():
   else: exe = os.path.dirname(__file__)
   import pathlib
   for p in pathlib.Path(os.path.abspath(exe)).parents:
-    print(os.path.basename(p))
     if os.path.basename(p) == 'NXP-UTIL': return p
   raise Exception("[-] Can't find base repository directory (Looking for NXP-UTIL).")
 
