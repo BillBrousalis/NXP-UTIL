@@ -3,7 +3,7 @@
 def generate_config():
   config_dict = {'VERSION': 0.2,
                  'DEV': 1,
-                 'RPI-IP': '192.168.1.83',
+                 'RPI-IP': '192.168.1.97',
                  'RPI-PORT': 9001,
                  'BYTES-TO-READ': 130,
                  'COMMANDS': True,  # / True

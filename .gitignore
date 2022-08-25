@@ -1,5 +1,8 @@
 notes
 todo.txt
+config/config.yaml
 __pycache__/
 .vscode/
+build/
 *.py[cod]
+*.spec
