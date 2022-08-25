@@ -6,24 +6,38 @@ def check(func):
   return wrapper
 
 class Client():
-  def __init__(self, host="192.168.1.15", port=9001):
-    print("[*] Starting Client...")
+  def __init__(self, host: str, port: int):
+    print('[*] Starting Client...')
+    print(f'[*] IP: {host} | PORT: {port}')
     self.HOST, self.PORT = host, port
     self.sock = None
     self._setup()
 
+  @property
+  def sock(self):
+    return self._sock
+
+  @sock.setter
+  def sock(self, s):
+    self._sock = s
+
   def _setup(self):
     import socket
     self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    self.sock.connect((self.HOST, self.PORT))
-    print("[*] Connection Successfull")
-
+    print('[*] Attempting to connect to server...')
+    try:
+      self.sock.connect((self.HOST, self.PORT))
+    except ConnectionRefusedError as e:
+      self.sock = None
+      print(f'[-] ConnectionRefusedError:\n{e}')
+    print('[*] Connection Successfull')
+  
   @check
   def close(self):
     self.sock.close()
 
   @check
-  def readbytes(self, n=1):
+  def readbytes(self, n: int):
     return self.sock.recv(n)
 
   @check
@@ -32,9 +46,12 @@ class Client():
     self.sock.send(dat)
 
   def test(self):
-    self.send("Hello World")
+    self.send('Hello World')
     self.close()
 
 if __name__ == '__main__':
-  c = Client()
+  print('[ Running Client Test ]')
+  c = Client('192.168.1.83', 9001)
   c.test()
+elif __name__ == 'client':
+  print('[+] CLIENT module imported')

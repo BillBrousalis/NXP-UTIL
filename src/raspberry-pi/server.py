@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 def check(func):
-  def wrapper(*args):
+  def wrapper(*args, **kwargs):
     if args[0].sock is None: raise Exception(f"[-] Socket is <None>: Can't {str(func)}")
-    return func(*args)
+    return func(*args, **kwargs)
   return wrapper
 
 class Server():
-  def __init__(self, host='', port=9001, max_dev=1):
+  def __init__(self, port: int, dev: int):
     print("[*] Starting Server...")
-    self.MAX_DEV = max_dev
-    self.HOST, self.PORT = host, port
+    self.DEV = dev
+    self.HOST, self.PORT = '', port
     self.sock = None
     self.clients = []
     self._setup()
@@ -18,7 +18,7 @@ class Server():
     return ( "[DEBUG]\n"
             f"{'HOST':>15}: {self.HOST}\n"
             f"{'PORT':>15}: {self.PORT}\n"
-            f"{'MAX DEV':>15}: {self.MAX_DEV}\n"
+            f"{'DEV':>15}: {self.DEV}\n"
             f"{'SOCK':>15}: {str(self.sock)}\n"
             f"{'CLIENTS':>15}: {' | '.join([str(x) for x in self.clients])}\n")
 
@@ -26,12 +26,12 @@ class Server():
     import socket
     self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     self.sock.bind((self.HOST, self.PORT))
-    self.sock.listen(self.MAX_DEV)
+    self.sock.listen(self.DEV)
     self.accept_connections()
 
   @check
   def accept_connections(self):
-    for i in range(self.MAX_DEV):
+    for i in range(self.DEV):
       conn, addr = self.sock.accept()
       self.clients.append(conn)
       print(f"[+] New Client Connected: [ {addr[0]} : {addr[1]} ]")
@@ -39,6 +39,7 @@ class Server():
   
   @check
   def close(self):
+    print('[-] Closing Server')
     self.sock.close()
 
   @check
@@ -51,6 +52,9 @@ class Server():
     self.close()
 
 if __name__ == "__main__":
-  #--testing
-  s = Server()
+  print('[ Running Server test ]')
+  s = Server(9001, 0)
+  print(s)
   s.test()
+elif __name__ == 'server':
+  print('[+] SERVER module added')

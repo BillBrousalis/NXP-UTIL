@@ -8,7 +8,6 @@
 #========================)======================================================
 import os
 import time
-import random
 import threading
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -23,13 +22,14 @@ import processing
 # Get base dir of repo
 def get_base_dir():
   import pathlib
-  for p in pathlib.Path(__file__).parents:
-    if os.path.basename(p) == "NXP-UTIL": return p
+  for p in pathlib.Path(os.path.abspath(__file__)).parents:
+    if os.path.basename(p) == 'NXP-UTIL': return p
   raise Exception("[-] Can't find base repository directory (Looking for NXP-UTIL).")
 
-def get_config():
+# Fetch config dict
+def get_config()->dict:
   import yaml
-  with open(os.path.join(get_base_dir(), "config/config.yaml"), "r") as f:
+  with open(os.path.join(get_base_dir(), 'config/config.yaml'), 'r') as f:
     return yaml.safe_load(f)
 
 # Threads to keep GUI running smoothly
@@ -44,27 +44,27 @@ def threadexec(func):
 
 class Gui(tk.Tk):
   _TITLE = 'LINESCAN DATA VISUALIZATION'
-  # Gui dims
+  # Gui dims in px
   _WIDTH = 700
   _HEIGHT = 500
   _COLORS = {'white': '#fafafa',
             'black': '#0f0f0f',
             'grey': '#707070',
-            'light blue': '#d8e6f2'
+            'light blue': '#e6f7f7'
   }
   # Top-left icon
   _ICON = os.path.join(get_base_dir(), 'assets/rpi.ico')
   _CONFIG = get_config()
+
   def __init__(self):
     print('[*] MAKE SURE SERVER IS RUNNING FIRST [*]')
     super().__init__()
     self.title(self._TITLE)
-    self.iconbitmap(self._ICON)
-    # Initialize fonts after tk itself has been initialized
+    self.iconbitmap(self._ICON)     # REMOVE LINE IF RUNNING / BUILDING ON LINUX
     self._FONT = tkFont.Font(family='Cascadia Code', size=13, weight='bold')
     self._FONTSMALL = tkFont.Font(family='Cascadia Code', size=10, weight='bold')
     self.draw_gui()
-    # Data-specific
+    # Data/Connection-specific
     self.setup()
   
   def draw_gui(self):
@@ -79,7 +79,7 @@ class Gui(tk.Tk):
     steerlb = tk.Label(self.canvas, text='Steering Angle:', font=self._FONT, bg=self._COLORS['white'])
     steerlb.place(anchor='n', relx=0.8, rely=0.09, relwidth=0.225, relheight=0.05)
     # Steering value displayed
-    self.steervallb = tk.Label(self.canvas, text='[ 0.0 ]', font=self._FONT, bg=self._COLORS['white'])
+    self.steervallb = tk.Label(self.canvas, text='[ 0 ]', font=self._FONT, bg=self._COLORS['white'])
     self.steervallb.place(anchor='n', relx=0.85, rely=0.14, relwidth=0.225, relheight=0.05)
     # Horizontal separator
     hsep = ttk.Separator(self.canvas, orient='horizontal')
@@ -88,7 +88,7 @@ class Gui(tk.Tk):
     speedlb = tk.Label(self.canvas, text='Speed:', font=self._FONT, bg=self._COLORS['white'])
     speedlb.place(anchor='n', relx=0.738, rely=0.24, relwidth=0.1, relheight=0.05)
     # Speed value displayed
-    self.speedvallb = tk.Label(self.canvas, text='[ 0.0 ]', font=self._FONT, bg=self._COLORS['white'])
+    self.speedvallb = tk.Label(self.canvas, text='[ 0 ]', font=self._FONT, bg=self._COLORS['white'])
     self.speedvallb.place(anchor='n', relx=0.85, rely=0.29, relwidth=0.225, relheight=0.05)
     # Start-Stop button
     self.but = tk.Button(self.canvas, text='START', font=self._FONT, bg=self._COLORS['white'], relief='groove', command=self.but_func)
@@ -109,35 +109,36 @@ class Gui(tk.Tk):
     self.ax.set_title('--LineScan Readings--')
   
   def setup(self):
+    # Store incoming data
     self.DATA = {'LINE': [],
                  'STEER': 0,
                  'SPEED': 0
     }
     self.isrunning = False
-    self.client = client.Client()
+    print('[*] Initializing client. Looking for running server...')
+    self.client = client.Client(host=self._CONFIG['RPI-IP'], port=self._CONFIG['RPI-PORT'])
+    if self.client.sock is None: 
+      while 1:
+        print('[-] Connection not made. Trying again...')
+        self.client = client.Client(host=self._CONFIG['RPI-IP'], port=self._CONFIG['RPI-PORT'])
+        if self.client.sock is not None: break
 
   # Update Gui steer / speed VALUE labels
   @threadexec
   def tUpdatelbs(self):
     while 1:
       if not self.isrunning: return
-      self.steervallb['text'] = f'[ {str(random.randint(0, 10))}.0 ]'
-      print("[ Thread ] tUpdatelbs()")
-      time.sleep(0.5)
+      # fetch and display new values
+      self.steervallb['text'] = f"[ {self.DATA['STEER']} ]"
+      self.speedvallb['text'] = f"[ {self.DATA['SPEED']} ]"
+      time.sleep(0.1)
 
   # Read / store incoming data
   @threadexec
   def tReaddat(self):
     while 1:
       if not self.isrunning: return
-      self.DATA['LINE'] = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-PER-LINE']))
-      if len(self.DATA['LINE']) != 128: raise Exception(f"ERROR DATA NOT 128 BYTES: {len(self.DATA['LINE'])}")
-      print(f"[ DEBUG ] DATA:\n{self.DATA['LINE']}")
-      # TODO: Implement:
-      #self.Data['STEER'] = 
-      #self.Data['SPEED'] = 
-      #print("[ Thread ] tReaddat()")
-      #time.sleep(1)
+      self.DATA['LINE'], self.DATA['SPEED'], self.DATA['STEER'] = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-TO-READ']), DEBUG=self._CONFIG['DEBUG'])
 
   # Graphing
   @threadexec
@@ -149,13 +150,13 @@ class Gui(tk.Tk):
     if not self.isrunning: self.anim.event_source.stop()
     # clear previous graph
     self.ax.clear()
-    #datx, daty = processing.prep_graph_dat(self.DATA['LINE'])
-    #print(f'DATX:\n{datx}')
-    #print(f'DATY:\n{daty}')
-    # plot new
-    #for gx, gy in zip(datx, daty):
-    #  self.ax.plot(gx, gy, color='black', linewidth=8)
-    self.ax.plot([i for i in range(128)], self.DATA['LINE'], color='green', linewidth=3)
+    if self._CONFIG['DEBUG']:
+      # plot raw data
+      self.ax.plot([i for i in range(128)], self.DATA['LINE'], color='blue', linewidth=3)
+    else:
+      datx, daty = processing.prep_graph_dat(self.DATA['LINE'])
+      # plot new
+      for gx, gy in zip(datx, daty): self.ax.plot(gx, gy, color='black', linewidth=8)
 
   # Start-Stop button functionality
   def but_func(self):
@@ -165,7 +166,7 @@ class Gui(tk.Tk):
     else:
       self.isrunning = True
       # Start threads
-      #self.tUpdatelbs()
+      self.tUpdatelbs()
       self.tReaddat()
       self.tAnim()
       self.but['text'] = 'STOP'
@@ -175,17 +176,17 @@ class Gui(tk.Tk):
   def but_hover_leave(self, button, color=_COLORS['white']): button.configure(bg=color)
 
   def exit(self):
-    print("[-] Exiting...")
+    print('[*] Exiting...')
     self.quit()
     self.destroy()
 
 # spawn Gui instance
 def spawn_gui():
+  print('[*] Spawning GUI Instance')
   g = Gui()
   g.resizable(False, False)
   g.protocol('WM_DELETE_WINDOW', g.exit)
   g.mainloop()
 
 if __name__ == '__main__':
-  print('[*] Spawning GUI Instance')
   spawn_gui()

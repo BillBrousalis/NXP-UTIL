@@ -1,29 +1,29 @@
 #!/usr/bin/env python3
 def check(func):
-  def wrapper(*args):
+  def wrapper(*args, **kwargs):
     if args[0].ser is None: raise Exception(f"[-] Ser is <None>. Can't {str(func)}")
-    return func(*args)
+    return func(*args, **kwargs)
   return wrapper
 
 class Uart():
-  def __init__(self, dev='/dev/ttyS0', baud=115200):
+  def __init__(self, uartdev: str, baud: int):
     self.ser = None
-    self.DEV, self.BAUD = dev, baud
+    self.DEV, self.BAUD = uartdev, baud
     self._setup()
 
   def _setup(self):
     import serial
-    self.ser = serial.Serial(self.DEV, self.BAUD, timeout=3)
+    self.ser = serial.Serial(self.DEV, self.BAUD, timeout=2)
     self.ser.flush()
     print("[*] Uart Initialized")
 
   @check
   def close(self):
-    print("[*] Closing UART")
+    print("[*] Closing Uart")
     self.ser.close()
 
   @check
-  def recv(self, n=1):
+  def recv(self, n: int):
     return self.ser.read(size=n)
 
   @check
@@ -36,5 +36,8 @@ class Uart():
     self.close()
 
 if __name__ == "__main__":
-  #--testing
+  print('[ Running Uart Test ]')
   u = Uart()
+  u.test()
+elif __name__ == 'uart':
+  print('[+] UART module added')
