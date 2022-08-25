@@ -21,15 +21,19 @@ import processing
 
 # Get base dir of repo
 def get_base_dir():
+  import sys
+  if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'): exe = os.path.dirname(sys.executable)
+  else: exe = os.path.dirname(__file__)
   import pathlib
-  for p in pathlib.Path(os.path.abspath(__file__)).parents:
+  for p in pathlib.Path(os.path.abspath(exe)).parents:
+    print(os.path.basename(p))
     if os.path.basename(p) == 'NXP-UTIL': return p
   raise Exception("[-] Can't find base repository directory (Looking for NXP-UTIL).")
 
 # Fetch config dict
 def get_config()->dict:
   import yaml
-  with open(os.path.join(get_base_dir(), 'config/config.yaml'), 'r') as f:
+  with open(os.path.join(get_base_dir(), 'config', 'config.yaml'), 'r') as f:
     return yaml.safe_load(f)
 
 # Threads to keep GUI running smoothly
@@ -118,10 +122,13 @@ class Gui(tk.Tk):
     print('[*] Initializing client. Looking for running server...')
     self.client = client.Client(host=self._CONFIG['RPI-IP'], port=self._CONFIG['RPI-PORT'])
     if self.client.sock is None: 
-      while 1:
+      for _ in range(3):
         print('[-] Connection not made. Trying again...')
         self.client = client.Client(host=self._CONFIG['RPI-IP'], port=self._CONFIG['RPI-PORT'])
         if self.client.sock is not None: break
+      if self.client.sock is None: 
+        print('[-] Unable to create connection. Exiting...')
+        exit()
 
   # Update Gui steer / speed VALUE labels
   @threadexec
