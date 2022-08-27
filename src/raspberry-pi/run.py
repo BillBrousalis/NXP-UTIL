@@ -55,7 +55,7 @@ def main():
       if config['DEBUG']: print(f'[ DEBUG ] UART Received:\n{buf}')
       # Pass buf to client(s) - commands to car
       if dev != 0: s.send(buf)
-      elif commands: algo.custom(buf[:128], dbg=True) #u.send(algo.custom(buf[:128], dbg=True))
+      elif commands: u.send(algo.custom(buf[:128], dbg=True))
       #TODO: deal with logging on rpi
       #if config['LOGGING'] == 'RPI':
   # basically Ctrl-C
@@ -67,7 +67,6 @@ def main():
   # generic exception
   except Exception as e:
     print(f'[-] Error: {e}')
-    exit()
 
 if __name__ == '__main__':
     print('[ Running RPI Loop ]')
