@@ -54,4 +54,4 @@ if __name__ == '__main__':
   c = Client('192.168.1.83', 9001)
   c.test()
 elif __name__ == 'client':
-  print('[+] CLIENT module imported')
+  print('[+] CLIENT module added')
