@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from simple_pid import PID
+from scipy.signal import find_peaks
 
 # PID Params - Tune
 KP, KD, KI = (0, 0, 0)
@@ -16,14 +17,21 @@ def prep(x: int)->bytes: return (x if x > 0 else x+255).to_bytes(1, 'little')
 # ** Develop custom algorithm here **
 def custom(dat: list, dbg: bool)->int:
   err = processdata(dat)
+  '''
   steering_angle = pid(err)
   prev = err
   if dbg: printdbg(err, steering_angle)
   return prep(round(steering_angle))
+  '''
 
 # ** Process linescan data **
-def processdata(dat: list)->float:
-  return 0
+def processdata(dat: list, MAXVAL=64)->float:
+  # flip peaks / valleys
+  dat = [MAXVAL-x for x in dat]
+  peaks = [x for x in find_peaks(dat, distance=10, prominence=12)[0]]
+  err = (((peaks[0] + peaks[1]) / 2) - 64) / 64
+  print(f'[*] ERR: {err}')
+
 
 def printdbg(err, steer):
   print('--------------------------\n'

@@ -1,11 +1,11 @@
 BYTES-TO-READ: 130
 COMMANDS: false
-DEBUG: false
+DEBUG: true
 DEV: 1
 LOGGING: null
 LOGGING-PATH-CLIENT: logs/client_logs.csv
 LOGGING-PATH-RPI: logs/rpi_logs.csv
-RPI-IP: 192.168.1.97
+RPI-IP: 192.168.1.9
 RPI-PORT: 9001
 UART: /dev/ttyS0
 UART-BAUD: 115200
