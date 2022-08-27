@@ -34,7 +34,7 @@ def processdata(dat: list, MAXVAL=64)->float:
   if len(peaks) != 2: return
   err = (((peaks[0] + peaks[1]) / 2) - 64) / 64
   print(f'[*] ERR: {err}')
-  time.sleep(0.5)
+  return err
 
 
 def printdbg(err, steer):
