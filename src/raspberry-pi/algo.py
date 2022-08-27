@@ -31,6 +31,7 @@ def processdata(dat: list, MAXVAL=64)->float:
   peaks = [x for x in find_peaks(dat, distance=10, prominence=12)[0]]
   err = (((peaks[0] + peaks[1]) / 2) - 64) / 64
   print(f'[*] ERR: {err}')
+  return err
 
 
 def printdbg(err, steer):
