@@ -67,7 +67,6 @@ def main():
   # generic exception
   except Exception as e:
     print(f'[-] Error: {e}')
-    exit()
 
 if __name__ == '__main__':
     print('[ Running RPI Loop ]')

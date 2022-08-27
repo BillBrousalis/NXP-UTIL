@@ -35,4 +35,4 @@ if __name__ == '__main__':
   dummydat = [0 for _ in range(128)]
   custom(dummydat)
 elif __name__ == 'algo':
-  print('[+] ALGO module imported')
+  print('[+] ALGO module added')
