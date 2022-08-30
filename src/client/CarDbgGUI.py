@@ -2,7 +2,7 @@
 #=============================================================================
 # Name        : CarDbgGUI
 # Author      : Basilis Mprousalis
-# Version     : 0.1
+# Version     : 0.2
 # Year        : 2022
 # Description : Graphical User Interface For LineScan Camera Data Visualization
 #========================)======================================================
