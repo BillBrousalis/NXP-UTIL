@@ -10,9 +10,9 @@
 
 **Stay away from the painful experience the MCUXpresso IDE provides:**
 
-![](assets/ssh.PNG)
+![](assets/ssh.png)
 
-![](assets/workflow.PNG)
+![](assets/workflow.png)
 
 ## **TL;DR: Setup**
 Install required `Python3` packages:
