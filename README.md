@@ -22,7 +22,8 @@ Set up your configuration by editing `config/config.yaml`.
 ```
 ./rpi-run
 ```
-or for setting the config on-the-fly, see options with
+
+for setting the some config options on-the-fly, check out
 ```
 ./rpi-run -h
 ```
@@ -39,6 +40,8 @@ python3 CarDbgGUI.py
 
 ## **Basic Idea**
 
+### Generic Debugging
+
 * Car --> Raspberry-PI: `UART` Connection
 * Raspberry-PI --> Client(s): `WIFI` Connection
 
@@ -48,6 +51,15 @@ Transmit your car's **crucial data**, such as:
   * Vehicle Speed
 
 over to your machine for viewing and proccessing, all in `real-time`.
+
+### Development
+
+Receive the LineScan's data and let your `RPI` take the wheel!
+
+Use the `Commands` Mode to control the car with the RPI!
+
+Develop and experiment with algorithms in `Python3` for quick prototyping,
+see they work, and ***then*** write them in `C`!
 
 ## **Building**
 
@@ -72,9 +84,9 @@ Makes the `ip:port` connection to the server.
 
 Visualizing linescan output in real-time using `Matplotlib` graphing.
 
-Steering angle and Vehicle speed available for viewing.
+Steering Angle and Vehicle Speed available for viewing.
 
-## **COMMANDS mode [ Optional ]:**
+## **COMMANDS mode:**
 
 The car can be controlled using the Raspberry-PI by setting speed and steering - Run the car in commands mode.
 
@@ -86,6 +98,6 @@ Not super fast, but useful nontheless.
 
 **Recommended (if not debugging):** 0 Clients
 
-## **LOGGING mode [ Optional ]:**
+## **LOGGING mode:**
 
 [TODO]: Logging option (None / "PI" / "CLIENT") to keep logs in selected device.
