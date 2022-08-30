@@ -46,7 +46,7 @@ python3 CarDbgGUI.py
 * Raspberry-PI --> Client(s): `WIFI` Connection
 
 Transmit your car's **crucial data**, such as:
-  * Linescan Camera Output
+  * LineScan Camera Output
   * Steering Angle and
   * Vehicle Speed
 
@@ -54,7 +54,7 @@ over to your machine for viewing and proccessing, all in `real-time`.
 
 ### Development
 
-Use the `Commands` Mode to let your `Raspberry-PI` take the wheel!
+Use the `Commands` Mode and let your `Raspberry-PI` take the wheel!
 
 Experiment and develop your algorithm in `Python3` for quick prototyping.
 Test it out, and ***then*** write it in `C`!
@@ -78,23 +78,21 @@ Basic `dnsmasq` / `hostapd` setup for WIFI access.
 
 ## **Graphical User Interface**
 
-Makese a connection to the server.
+Makes a connection to the server.
 
-Visualizing LineScan output in real-time using `Matplotlib Graphing`.
+Visualizes LineScan output in real-time with `Matplotlib Graphing`.
 
-**Steering Angle** and **Vehicle Speed** available for viewing.
+**Steering Angle** and **Vehicle Speed** also available for viewing.
 
 ## **COMMANDS mode:**
 
-Let the `Raspberry-PI` use the LineScan's output to generate a new trajectory for your vehicle.
+Let the `Raspberry-PI` use the LineScan's output to **generate a new trajectory** for your vehicle.
 
 Develop your algorithm in `Python3` before writting large amounts of C code.
 
-Runs `server-side` for speed.
+Runs `server-side` for "speed". Not super fast, but very useful nontheless.
 
-Not super fast, but very useful nontheless.
-
-Make sure the car is running in `commands` mode too.
+**[!]** Make sure the car is running in `commands` mode too.
 
 **Recommended (if not debugging):** 0 Clients
 
