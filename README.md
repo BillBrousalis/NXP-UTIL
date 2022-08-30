@@ -11,6 +11,7 @@
 **Stay away from the painful experience the MCUXpresso IDE provides:**
 
 ![](assets/ssh.PNG)
+
 ![](assets/workflow.PNG)
 
 ## **TL;DR: Setup**
