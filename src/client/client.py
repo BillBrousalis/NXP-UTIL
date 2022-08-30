@@ -51,7 +51,7 @@ class Client():
 
 if __name__ == '__main__':
   print('[ Running Client Test ]')
-  c = Client('192.168.1.83', 9001)
+  c = Client('192.168.1.9', 9001)
   c.test()
 elif __name__ == 'client':
   print('[+] CLIENT module added')

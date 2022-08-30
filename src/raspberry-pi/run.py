@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
 import os
-# MODULES
-import algo
-import uart
-import server
 
 # Get base dir of repo
 def get_base_dir():
@@ -21,30 +17,41 @@ def get_config()->dict:
 # Small custom argument parser
 def argparser():
   import sys
-  dev, com = None, None
+  dev, com, dbg = None, None, None
   if len(sys.argv) < 2: return (dev, com)
   for idx in range(1, len(sys.argv)):
-    if sys.argv[idx] == '-h': 
-      print('Optional Commands:\n'
-            '   -h      Help\n\n'
-            '--dev      specify expected number of clients\n'
-            '           ex.     ./run.py --dev=3\n\n'
-            '--com      enable COMMANDS mode\n'
-            '           ex. --dev=0 --com\n')
+    if sys.argv[idx] in ('-h', '--help'): 
+      print('\nOptional:\n\n'
+            ' --help     Show Argument Options\n\n'
+            ' --dev      specify expected number of clients\n'
+            '            ex.    ./run.py --dev=3\n\n'
+            ' --com      enable COMMANDS mode\n'
+            '            ex.    ./rpi-run --dev=0 --com\n\n'
+            ' --dbg      enable DEBUG mode\n'
+            '            ex.    ./rpi-run --dev=1 --dbg\n\n')
       exit()
     elif '--dev=' in sys.argv[idx]: dev = int(sys.argv[idx].split('=')[1])
     elif '--com' in sys.argv[idx]: com = True
+    elif '--dbg' in sys.argv[idx]: dbg = True
     else: raise Exception(f'Unknown argument: {sys.argv[idx]}')
-  return (dev, com)
+  return (dev, com, dbg)
 
 def main():
+  dev, commands, dbg = argparser()
+  # MODULES
+  import algo
+  import uart
+  import server
   config = get_config()
-  dev, commands = argparser()
   if dev is None: dev = config['DEV']
   if commands is None: commands = config['COMMANDS']
+  if dbg is None: dbg = config['DEBUG']
   assert(dev >= 0 and dev < 5)
+  print('----')
   print(f'[*] COMMANDS mode: {"**ON**" if commands else "**OFF**"}')
+  print(f'[*] DEBUG mode: {"**ON**" if dbg else "**OFF**"}')
   print(f'[*] Expecting [ {dev} ] Client(s)')
+  print('----')
   s = server.Server(port=config["RPI-PORT"], dev=dev)
   u = uart.Uart(uartdev=config['UART'], baud=config['UART-BAUD'])
   buf = None
@@ -52,10 +59,10 @@ def main():
     while 1:
       # Get Uart
       buf = u.recv(config['BYTES-TO-READ'])
-      if config['DEBUG']: print(f'[ DEBUG ] UART Received:\n{buf}')
+      if dbg: print(f'[ DEBUG ] UART Received:\n{buf}')
       # Pass buf to client(s) - commands to car
       if dev != 0: s.send(buf)
-      elif commands: algo.custom(buf[:128], dbg=True) #u.send(algo.custom(buf[:128], dbg=True))
+      elif commands: u.send(algo.custom(buf[:128], dbg=True))
       #TODO: deal with logging on rpi
       #if config['LOGGING'] == 'RPI':
   # basically Ctrl-C
