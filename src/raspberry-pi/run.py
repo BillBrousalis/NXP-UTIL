@@ -57,7 +57,7 @@ def main():
   buf = None
   try:
     while 1:
-      # Get Uart
+      # Get Uart Data
       buf = u.recv(config['BYTES-TO-READ'])
       if dbg: print(f'[ DEBUG ] UART Received:\n{buf}')
       # Pass buf to client(s) - commands to car
@@ -65,7 +65,7 @@ def main():
       elif commands: u.send(algo.custom(buf[:128], dbg=True))
       #TODO: deal with logging on rpi
       #if config['LOGGING'] == 'RPI':
-  # basically Ctrl-C
+  # Ctrl-C
   except KeyboardInterrupt:
     print('\n[-] Closing server & exiting...')
     s.close()
