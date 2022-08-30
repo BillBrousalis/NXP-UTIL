@@ -8,6 +8,11 @@
 
 ![](assets/trifecta.png)
 
+**Stay away from the painful experience the MCUXpresso IDE provides:**
+
+![](assets/ssh.PNG)
+![](assets/workflow.PNG)
+
 ## **TL;DR: Setup**
 Install required `Python3` packages:
 
@@ -92,7 +97,7 @@ Develop your algorithm in `Python3` before writting large amounts of C code.
 
 Runs `server-side` for "speed". Not super fast, but very useful nontheless.
 
-**[!]** Make sure the car is running in `commands` mode too.
+**[ ! ]** Make sure the car is running in `commands` mode too.
 
 **Recommended (if not debugging):** 0 Clients
 
