@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-#=============================================================================
+#==============================================================================
 # Name        : CarDbgGUI
 # Author      : Basilis Mprousalis
 # Version     : 0.2
 # Year        : 2022
 # Description : Graphical User Interface For LineScan Camera Data Visualization
-#========================)======================================================
+#==============================================================================
 import os
 import time
 import threading
@@ -132,8 +132,7 @@ class Gui(tk.Tk):
   # Update Gui steer / speed VALUE labels
   @threadexec
   def tUpdatelbs(self):
-    while 1:
-      if not self.isrunning: return
+    while self.isrunning:
       # fetch and display new values
       self.steervallb['text'] = f"[ {self.DATA['STEER']} ]"
       self.speedvallb['text'] = f"[ {self.DATA['SPEED']} ]"
@@ -142,8 +141,7 @@ class Gui(tk.Tk):
   # Read / store incoming data
   @threadexec
   def tReaddat(self):
-    while 1:
-      if not self.isrunning: return
+    while self.isrunning:
       self.DATA['LINE'], self.DATA['SPEED'], self.DATA['STEER'] = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-TO-READ']), DEBUG=self._CONFIG['DEBUG'])
 
   # Graphing
