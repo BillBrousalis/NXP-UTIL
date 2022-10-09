@@ -4,7 +4,7 @@ from scipy.signal import find_peaks
 import time
 
 # PID Params - Tune
-KP, KD, KI = (75, 1, 0)
+KP, KD, KI = (80, 0, 0)
 target = 0
 pid = PID(KP, KD, KI, setpoint=target)
 # Keep history of errors

@@ -18,7 +18,7 @@ def get_config()->dict:
 def argparser():
   import sys
   dev, com, dbg, port = None, None, None, None
-  if len(sys.argv) < 2: return (dev, com)
+  if len(sys.argv) < 2: return (dev, com, dbg, port)
   for idx in range(1, len(sys.argv)):
     if sys.argv[idx] in ('-h', '--help'): 
       print('\nOptional:\n\n'
@@ -37,7 +37,7 @@ def argparser():
     elif '--dbg' in sys.argv[idx]: dbg = True
     elif '--port=' in sys.argv[idx]: port = int(sys.argv[idx].split('=')[1])
     else: raise Exception(f'Unknown argument: {sys.argv[idx]}')
-  return (dev, com, dbg, port)
+  return dev, com, dbg, port
 
 def main():
   dev, commands, dbg, port = argparser()

@@ -115,7 +115,8 @@ class Gui(tk.Tk):
     # Store incoming data
     self.DATA = {'LINE': [],
                  'STEER': 0,
-                 'SPEED': 0
+                 'SPEED': 0,
+                 'PEAKS': []
     }
     self.isrunning = False
     print('[*] Initializing client. Looking for running server...')
@@ -142,7 +143,9 @@ class Gui(tk.Tk):
   @threadexec
   def tReaddat(self):
     while self.isrunning:
-      self.DATA['LINE'], self.DATA['SPEED'], self.DATA['STEER'] = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-TO-READ']), DEBUG=self._CONFIG['DEBUG'])
+      dat = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-TO-READ']), DEBUG=self._CONFIG['DEBUG'])
+      self.DATA['LINE'], self.DATA['SPEED'], self.DATA['STEER'], self.DATA['PEAKS'] = dat
+      print(f"PEAKS: {self.DATA['PEAKS']}")
 
   # Graphing
   @threadexec

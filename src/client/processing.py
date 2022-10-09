@@ -9,9 +9,9 @@ def decode(dat, DEBUG: bool, THRESHOLD=120):
   # decode when 16 bytes are being send instead of 128
   # TODO: implement 16-byte into 128 bit dec
   if DEBUG: 
-    print(f'DATA:\n{[x for x in dat]}')
+    #print(f'DATA:\n{[x for x in dat]}')
     # data coming in: 0-127th byte -> line data, 128-129th byte -> speed / steer value
-    return (list(dat[:128]), uint2int(dat[128]), uint2int(dat[129]))
+    return (list(dat[:128]), uint2int(dat[128]), uint2int(dat[129]), [uint2int(dat[130]), uint2int(dat[131])])
   return ([1 if b > THRESHOLD else 0 for b in dat[:128]], uint2int(dat[128]), uint2int(dat[129]))
 
 # prep data into multi-part graph
