@@ -160,6 +160,10 @@ class Gui(tk.Tk):
     if self._CONFIG['DEBUG']:
       # plot raw data
       self.ax.plot([i for i in range(128)], self.DATA['LINE'], color='blue', linewidth=3)
+      # plot detected peaks
+      peaksx = [x for x in self.DATA['PEAKS'] if x != 0]
+      peaksy = [self.DATA['DATA'][idx] for idx in peaksx]
+      self.ax.plot(peaksx, peaksy, 'r+')
     else:
       datx, daty = processing.prep_graph_dat(self.DATA['LINE'])
       # plot new
