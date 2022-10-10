@@ -19,7 +19,7 @@ class Uart():
 
   @check
   def close(self):
-    print("[*] Closing Uart")
+    print("[-] Closing Uart")
     self.ser.close()
 
   @check
