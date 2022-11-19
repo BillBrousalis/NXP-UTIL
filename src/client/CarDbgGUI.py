@@ -145,7 +145,6 @@ class Gui(tk.Tk):
     while self.isrunning:
       dat = processing.decode(self.client.readbytes(n=self._CONFIG['BYTES-TO-READ']), DEBUG=self._CONFIG['DEBUG'])
       self.DATA['LINE'], self.DATA['SPEED'], self.DATA['STEER'], self.DATA['PEAKS'] = dat
-      print(f"PEAKS: {self.DATA['PEAKS']}")
 
   # Graphing
   @threadexec
@@ -160,6 +159,10 @@ class Gui(tk.Tk):
     if self._CONFIG['DEBUG']:
       # plot raw data
       self.ax.plot([i for i in range(128)], self.DATA['LINE'], color='blue', linewidth=3)
+      # plot detected peaks
+      peaksx = [x for x in self.DATA['PEAKS'] if x != 0]
+      peaksy = [self.DATA['LINE'][idx] for idx in peaksx]
+      self.ax.plot(peaksx, peaksy, 'ro')
     else:
       datx, daty = processing.prep_graph_dat(self.DATA['LINE'])
       # plot new
