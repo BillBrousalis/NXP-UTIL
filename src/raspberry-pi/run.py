@@ -5,13 +5,13 @@ import os
 def get_base_dir():
   import pathlib
   for p in pathlib.Path(os.path.abspath(__file__)).parents:
-    if os.path.basename(p) == "NXP-UTIL": return p
+    if os.path.basename(p) == 'NXP-UTIL': return p
   raise Exception("[-] Can't find base repository directory (Looking for NXP-UTIL).")
 
 # Fetch config dict
 def get_config()->dict:
   import yaml
-  with open(os.path.join(get_base_dir(), "config/config.yaml"), "r") as f:
+  with open(os.path.join(get_base_dir(), 'config/config.yaml'), 'r') as f:
     return yaml.safe_load(f)
 
 # Small custom argument parser
@@ -51,11 +51,13 @@ def main():
   if dbg is None: dbg = config['DEBUG']
   if port is None: port = config['RPI-PORT']
   assert(dev >= 0 and dev < 5)
+  if config['LOGGING'] == 'RPI': fd = open(config['LOGGING-PATH-RPI'], 'w')
   print('----')
   print(f'[*] COMMANDS mode: {"**ON**" if commands else "**OFF**"}')
   print(f'[*] DEBUG mode: {"**ON**" if dbg else "**OFF**"}')
   print(f'[*] Expecting [ {dev} ] Client(s)')
   print(f'[*] Running on port [ {port} ]')
+  print(f'[*] LOGGING mode: {"**ON**" if config["LOGGING"]=="RPI" else "**OFF**"}')
   print('----')
   if dev is not None: s = server.Server(port=port, dev=dev)
   u = uart.Uart(uartdev=config['UART'], baud=config['UART-BAUD'])
@@ -68,17 +70,23 @@ def main():
       # Pass buf to client(s) - commands to car
       if dev != 0: s.send(buf)
       if commands: u.send(algo.custom(buf[:128], dbg=True))
-      #TODO: deal with logging on rpi
-      #if config['LOGGING'] == 'RPI':
+      if config['LOGGING'] == 'RPI': fd.write(','.join([str(x) for x in buf[:128]])+'\n')
   # Ctrl-C
   except KeyboardInterrupt:
     print('\n[-] Closing server & exiting...')
+    if config['LOGGING'] == 'RPI': fd.close()
     s.close()
     u.close()
     exit()
   # generic exception
   except Exception as e:
     print(f'[-] Error: {e}')
+    print('Exiting...')
+    if config['LOGGING'] == 'RPI': fd.close()
+    s.close()
+    u.close()
+    exit()
+
 
 if __name__ == '__main__':
     print('[ Running RPI Loop ]')
